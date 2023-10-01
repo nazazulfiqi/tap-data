@@ -1,13 +1,14 @@
 "use client"
+import BaseLayout from "../../components/layouts/base/base";
 import { FC } from "react";
 
 
 export const DashboardModule : FC = () => {
 
     return(
-        <div>
-        <h1>Ini Dashboard</h1>
-        </div>
+        <BaseLayout>
+
+    </BaseLayout>
     )
 
 
