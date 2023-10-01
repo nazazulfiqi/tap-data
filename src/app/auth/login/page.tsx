@@ -7,6 +7,11 @@ import { redirect } from "next/navigation";
 const LoginPages: NextPage = async () => {
     const session = await getServerSession(authOptions);
     console.log(session);
+    
+    
+    if (session) {
+        redirect('/dashboard');
+    }
 
     return <LoginModule/>
 }

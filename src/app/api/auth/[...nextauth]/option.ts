@@ -6,7 +6,7 @@ import { loginRequest } from '../../../../hooks/authentications/request';
 
 export const authOptions: NextAuthOptions = {
   pages: {
-    signIn: '/auth/login',
+    signIn: '/',
     signOut: '/auth/logout',
   },
   session: {
@@ -50,12 +50,12 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    // async signIn({ user}) {
+    async signIn({ user}) {
  
 
-    //   if (user) return true;
-    //   return false;
-    // },
+      if (user) return true;
+      return false;
+    },
     
     async jwt({ token, user, account }) {
       const currentUser = user as unknown as TLoginData;
