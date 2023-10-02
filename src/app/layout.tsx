@@ -7,8 +7,10 @@ export const metadata: Metadata = {
   description:
     'Perusahaan yang bergerak di bidang teknologi informasi dan komunikasi',
   icons: {
-    icon: '/favicon.ico',
+    icon : ['/favicon.ico?v=4'],
+    shortcut: ['/favicon/favicon-32x32.png'],
   },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({
