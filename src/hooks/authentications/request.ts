@@ -6,6 +6,6 @@ export const loginRequest = async (
     payload?: TLoginPayload
   ): Promise<TLoginResponse> => {
     const data = await api.post<TLoginResponse>(LOGIN, payload);
-    console.log('data', data);
+    // console.log('data', data);
     return data.data;
   };

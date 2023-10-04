@@ -3,23 +3,42 @@
 import { validationSchemaLogin } from "../../../config/validation/authentications/login/login";
 import { Button } from "../../../components/button/button"
 import Image from "next/image"
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { FC, useState } from "react"
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "../../../components/text";
 import { ErrorBoundary } from "react-error-boundary";
 import Swal from "sweetalert2";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/src/app/api/auth/[...nextauth]/option";
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { Toast } from "flowbite-react";
 
 
 type ValidationSchema = z.infer<typeof validationSchemaLogin>;
 
-export const LoginModule : FC = () => {
+export const LoginModule : FC =  () => {
+
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [getError, setError] = useState<string | undefined | null>(undefined);
+
+ 
+    
+
+    // const session = await getServerSession(authOptions);
+    // console.log(session);
+
+  
+    
+    // if (session) {
+    //     redirect('/dashboard');
+    // }
+
 
     const {
         control,
@@ -38,31 +57,25 @@ export const LoginModule : FC = () => {
       const onSubmit = handleSubmit(async (data, e) => {
         setLoading(true);
         try {
-          const response = await signIn('login', {
+          const response = await
+          
+          signIn('login', {
             email: data.email,
             password: data.password,
             redirect: false,
           });
-            console.log(response);
+            // console.log(response);
             
           if (response?.url === null) {
-            Swal.fire({
-              position: 'center',
-              icon: 'error',
-              title: 'Error',
-              showConfirmButton: false,
-              timer: 1500
-            })
+            toast.error("Try Again!", {
+              autoClose: 2000,
+            });
             router.push('/');
             setError(response?.error);
           }else{
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Success',
-              showConfirmButton: false,
-              timer: 1500
-            })
+            toast.success("Login Success!", {
+              autoClose: 2000,
+            });
             router.push('./dashboard');
           }
         //   if (response?.ok) {
@@ -77,6 +90,8 @@ export const LoginModule : FC = () => {
         }
         setLoading(false);
       });
+
+
 
     return (
         <ErrorBoundary fallback={<>{getError}</>}>
@@ -119,6 +134,7 @@ export const LoginModule : FC = () => {
               DONE
             </Button>
           </form>
+          <ToastContainer />
         </div>
         <div className="box-right text-center relative w-1/2 h-full lg:block hidden">
           <Image

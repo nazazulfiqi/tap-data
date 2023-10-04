@@ -13,6 +13,7 @@ import { SubMenu } from '../sidebar/submenu';
 import { signOut } from 'next-auth/react';
 import { Button } from '../button/button';
 import Swal from 'sweetalert2';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const SidebarComponent: FC = (): ReactElement => {
     let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
@@ -20,7 +21,7 @@ export const SidebarComponent: FC = (): ReactElement => {
     const sidebarRef = useRef<HTMLDivElement | null>(null);
     const pathname = usePathname();
   
-    console.log(pathname);
+    // console.log(pathname);
   
     useEffect(() => {
       if (isTabletMid) {
@@ -82,16 +83,14 @@ export const SidebarComponent: FC = (): ReactElement => {
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: '#000',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Logout'
           }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire(
-                'Success',
-                'Logout Success',
-                'success'
-              )
+              toast.success("Logout Success!", {
+                autoClose: 2000,
+              });
               signOut()
             }
           })
@@ -189,6 +188,7 @@ export const SidebarComponent: FC = (): ReactElement => {
         <div className="m-3 md:hidden  " onClick={() => setOpen(true)}>
           <MdMenu size={25} />
         </div>
+        <ToastContainer />
       </div>
     );
 

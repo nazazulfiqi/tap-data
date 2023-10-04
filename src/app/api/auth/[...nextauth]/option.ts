@@ -63,8 +63,8 @@ export const authOptions: NextAuthOptions = {
         token.access_token = account.access_token;
         token.refresh_token = account.refresh_token;
       } else if (account?.provider === 'login' && currentUser) {
-        console.log('cruser', currentUser);
-        console.log(user, account);
+        // console.log('cruser', currentUser);
+        // console.log(user, account);
 
         token.access_token = currentUser.data.access_token;
         currentUser.name = user.name;
