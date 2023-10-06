@@ -48,7 +48,7 @@ import Pagination from "@/src/components/pagination";
     }, [data, setEmployeeData]);
 
     const handlePageChange = async (page: number) => {
-      window.scrollTo(0, 0);
+      window.scrollTo(0, 300);
       const { data } = await refetch();
   
       router.replace(`/dashboard?page=${page}`);
