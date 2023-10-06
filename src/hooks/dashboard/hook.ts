@@ -4,10 +4,13 @@ import { TEmployeeResponse, TuseEmployeeData } from "../../types/userData";
 import { useRecoilState } from "recoil";
 import { employeeGetRequest } from "./request";
 
-export const useGetEmployee = (): UseQueryResult<TEmployeeResponse> =>
+export const useGetEmployee = (
+  page: number,
+  limit: number
+): UseQueryResult<TEmployeeResponse> =>
     useQuery({
-      queryKey: ['employee-get'],
-      queryFn: async () => await employeeGetRequest(),
+      queryKey: ['employee-get', page, limit],
+      queryFn: async () => await employeeGetRequest(page, limit),
     });
 
 export const useEmployeeData = (): TuseEmployeeData => {

@@ -4,27 +4,14 @@
 
 //   import { formatTime } from "@cs-user/utils";
 //   import { useGetUserData } from "hooks/dashboard/user/hooks";
-  import { useRouter } from "next/navigation";
+  import { useRouter, useSearchParams } from "next/navigation";
 import dataStatic from "./constant";
 import { ReusableTable } from "@/src/components/table";
 import { useEmployeeData, useGetEmployee } from "@/src/hooks/dashboard/hook";
+import Pagination from "@/src/components/pagination";
 // import { TUserDataItem } from "@/src/types/userData";
   
   export const TableSection: FC = () => {
-
-    const {data} = useGetEmployee()
-
-    console.log(data);
-    
-    const { setEmployeeData, getEmployeeData } = useEmployeeData();
-
-    useEffect(() => {
-      setEmployeeData(data as any);
-     
-    }, [data, setEmployeeData]);
-
-
-
 
     const columns = [
       { header: "Position Description", className: "w-[200px]" },
@@ -36,7 +23,6 @@ import { useEmployeeData, useGetEmployee } from "@/src/hooks/dashboard/hook";
       { header: "Status Plan" },
     ];
   
-    const [page, setPage] = useState<number>(1);
     const [perPage, setPerPage] = useState<number>(20);
     const [search, setSearch] = useState<string>("");
     // const [userData, setUserData] = useState<TUserDataItem[]>([]);
@@ -46,6 +32,29 @@ import { useEmployeeData, useGetEmployee } from "@/src/hooks/dashboard/hook";
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
     const [sortColumn, setSortColumn] = useState<string>("_id");
     const router = useRouter();
+
+    const searchParams = useSearchParams();
+    const page = searchParams.get('page') || '1';
+
+    const {data, refetch} = useGetEmployee(Number(page), 10)
+
+    console.log(data);
+    
+    const { setEmployeeData, getEmployeeData } = useEmployeeData();
+
+    useEffect(() => {
+      setEmployeeData(data as any);
+     
+    }, [data, setEmployeeData]);
+
+    const handlePageChange = async (page: number) => {
+      window.scrollTo(0, 0);
+      const { data } = await refetch();
+  
+      router.replace(`/dashboard?page=${page}`);
+    };
+
+
     // const { data: queryData } = useGetUserData(perPage, search, sortColumn, sortOrder, page);
   
     // useEffect(() => {
@@ -68,30 +77,8 @@ import { useEmployeeData, useGetEmployee } from "@/src/hooks/dashboard/hook";
       }
     };
   
-    const totalPages = Math.ceil(totalIndex / perPage);
-  
-    const handlePreviousPage = () => {
-      if (page > 1) {
-        setPage(page - 1);
-        router.push(`/dashboard/user?page=${page - 1}`);
-      }
-    };
-  
-    const handleNextPage = () => {
-      if (page < totalPages) {
-        setPage(page + 1);
-        router.push(`/dashboard/user?page=${page + 1}`);
-      }
-    };
-  
-    const HandleUsePage = (page: number) => {
-      setPage(page);
-      router.push(`/dashboard/user?page=${page}`);
-    };
-  
-    const start = (page - 1) * perPage;
     return (
-      <div className="flex flex-col gap-5 justify-center items-center">
+      <div className="flex flex-col gap-5 justify-center items-center mt-8">
         <ReusableTable
           classBody="bg-[#fff]"
           classHead="bg-[#F5F8FF] text-neutral-400 border-b"
@@ -99,7 +86,7 @@ import { useEmployeeData, useGetEmployee } from "@/src/hooks/dashboard/hook";
           MainTableSort={handleSort}
         >
           {getEmployeeData?.data?.employees?.map((data: any, index: any) => {
-            console.log(data);
+
             
             return (
               <tr key={index} className="border-b">
@@ -128,15 +115,11 @@ import { useEmployeeData, useGetEmployee } from "@/src/hooks/dashboard/hook";
             );
           })}
         </ReusableTable>
-        {/* <Paginations
-          page={page}
-          setPage={HandleUsePage}
-          totalPages={totalPages}
-          prevActive={prevActive}
-          nextActive={nextActive}
-          handlePreviousPage={handlePreviousPage}
-          handleNextPage={handleNextPage}
-        /> */}
+        <Pagination
+            onPageChange={handlePageChange}
+            totalPages={Number(getEmployeeData?.data?.max_page)}
+            currentPage={Number(page)}
+          />
       </div>
     );
   };
