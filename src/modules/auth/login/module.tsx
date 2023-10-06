@@ -23,6 +23,10 @@ type ValidationSchema = z.infer<typeof validationSchemaLogin>;
 
 export const LoginModule : FC =  () => {
 
+  const {data: session} = useSession();
+  console.log(session);
+  
+
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [getError, setError] = useState<string | undefined | null>(undefined);

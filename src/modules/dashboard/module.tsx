@@ -4,6 +4,7 @@ import { FC } from "react";
 import HeaderSection from "./header/header";
 import ChartSection from "./chart/chart";
 import ContentSection from "./content/content";
+import { TableSection } from "./table/table";
 
 
 export const DashboardModule : FC = () => {
@@ -13,6 +14,7 @@ export const DashboardModule : FC = () => {
         <HeaderSection/>
         <ChartSection/>
         <ContentSection/>
+        <TableSection/>
     </BaseLayout>
     )
 

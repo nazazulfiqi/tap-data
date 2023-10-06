@@ -5,6 +5,7 @@ export type TLoginPayload = {
 
   export type TLoginData = {
   data: {
+    role: string;
     access_token: string;
   };
 } & User;
