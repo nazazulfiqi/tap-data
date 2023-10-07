@@ -67,7 +67,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: Tpagination) => {
             className={`mx-1 px-3 py-2 rounded-md text-sm font-semibold text-neutral-500 ${
               page === currentPage
                 ? 'bg-cream-base text-black'
-                : 'hover:bg-primary-base hover:text-white'
+                : 'hover:bg-cream-base hover:text-black'
             }`}
             onClick={() => {
               if (typeof page === 'number') {

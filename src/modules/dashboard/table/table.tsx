@@ -1,15 +1,28 @@
 "use client"
-  import React, { FC, useEffect, useState } from "react";
-  import Link from "next/link";
-
-//   import { formatTime } from "@cs-user/utils";
-//   import { useGetUserData } from "hooks/dashboard/user/hooks";
-  import { useRouter, useSearchParams } from "next/navigation";
+  import React, { DependencyList, FC, Fragment, useCallback, useEffect, useState } from "react";
+ import { useRouter, useSearchParams } from "next/navigation";
 import dataStatic from "./constant";
 import { ReusableTable } from "@/src/components/table";
 import { useEmployeeData, useGetEmployee } from "@/src/hooks/dashboard/hook";
 import Pagination from "@/src/components/pagination";
-// import { TUserDataItem } from "@/src/types/userData";
+import { LoadingSpinner } from "@/src/components/loading/spinner";
+import { Button } from "@/src/components/button/button";
+import TextFieldNormal from "@/src/components/textfield";
+import SelectBox from "../../../components/selectbox";
+
+
+export function useDebounce(
+  effect: VoidFunction,
+  dependencies: DependencyList,
+  delay: number
+): void {
+  const callback = useCallback(effect, dependencies);
+
+  useEffect(() => {
+    const timeout = setTimeout(callback, delay);
+    return () => clearTimeout(timeout);
+  }, [callback, delay]);
+}
   
   export const TableSection: FC = () => {
 
@@ -23,22 +36,44 @@ import Pagination from "@/src/components/pagination";
       { header: "Status Plan" },
     ];
   
-    const [perPage, setPerPage] = useState<number>(20);
-    const [search, setSearch] = useState<string>("");
-    // const [userData, setUserData] = useState<TUserDataItem[]>([]);
-    const [totalIndex, setTotalIndex] = useState<number>(0);
-    const [nextActive, setNextActive] = useState<boolean>(true);
-    const [prevActive, setPrevActive] = useState<boolean>(false);
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
     const [sortColumn, setSortColumn] = useState<string>("_id");
     const router = useRouter();
-
     const searchParams = useSearchParams();
+    const searchQuery = searchParams.get('search') || '';
+
+    const [option, setOption] = useState({
+      limit: 10,
+      page: 1,
+      search: "",
+    });
+
     const page = searchParams.get('page') || '1';
 
-    const {data, refetch} = useGetEmployee(Number(page), 10)
+    const {data, refetch, isLoading} = useGetEmployee(
+      option.page,
+      option.limit,
+      searchQuery,
+    )
 
-    console.log(data);
+    const [deb, setDeb] = useState(searchQuery);
+
+    const listEmployeeData = data;
+    useEffect(() => {
+      setOption(option);
+    }, [option]);
+
+    // console.log(listEmployeeData);
+    
+
+    useDebounce(
+      () => {
+        setOption((prev) => ({ ...prev, search: deb, page: 1 }));
+        router.replace(`/dashboard?page=1&search=${deb}`);
+      },
+      [deb],
+      700
+    );
     
     const { setEmployeeData, getEmployeeData } = useEmployeeData();
 
@@ -48,23 +83,9 @@ import Pagination from "@/src/components/pagination";
     }, [data, setEmployeeData]);
 
     const handlePageChange = async (page: number) => {
-      window.scrollTo(0, 300);
-      const { data } = await refetch();
-  
-      router.replace(`/dashboard?page=${page}`);
+      setOption((prev) => ({ ...prev, page: page }));
+      router.push(`/dashboard?page=${page}&search=${deb}`);
     };
-
-
-    // const { data: queryData } = useGetUserData(perPage, search, sortColumn, sortOrder, page);
-  
-    // useEffect(() => {
-    //   if (queryData && queryData.data) {
-    //     setUserData(queryData.data);
-    //     setTotalIndex(queryData.meta.total);
-    //   }
-    // }, [queryData]);
-  
-    // console.log(userData);
   
     const handleSort = (header: string) => {
       if (sortColumn === header) {
@@ -78,6 +99,40 @@ import Pagination from "@/src/components/pagination";
     };
   
     return (
+      <Fragment>
+          <section className="w-full mt-4 px-8">
+      <main className="">
+        <div className="flex flex-col gap-4">
+          <div className="w-full">
+            <TextFieldNormal name="KEYWORD" prop="block" desc="Note: The user can search on Regional, Division Description, Position Description, Status Plan Fulfillment" widthInput="w-full" value={deb} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDeb(e.target.value)}/>
+          </div>
+          <div className="flex space-x-4">
+            <SelectBox />
+            <SelectBox />
+            <SelectBox />
+          </div>
+          <div className="flex space-x-4">
+            <SelectBox />
+            <SelectBox />
+            <SelectBox />
+          </div>
+          <div className="flex space-x-4">
+            <SelectBox />
+            <SelectBox />
+            <SelectBox />
+          </div>
+        </div>
+        <div className="flex mt-5 gap-x-4 justify-end">
+          <Button type="button" className="bg-[#D9D9D9] text-black px-6 border-2 border-black font-bold">
+            SEARCH
+          </Button>
+          <Button type="button"  className="bg-[#D9D9D9] text-black px-6 border-2 border-black font-bold">
+            CLEAR
+          </Button>
+        </div>
+      </main>
+    </section>  
+   
       <div className="flex flex-col gap-5 justify-center items-center mt-8">
         <ReusableTable
           classBody="bg-[#fff]"
@@ -85,7 +140,7 @@ import Pagination from "@/src/components/pagination";
           columns={columns}
           MainTableSort={handleSort}
         >
-          {getEmployeeData?.data?.employees?.map((data: any, index: any) => {
+          {listEmployeeData?.data?.employees?.map((data: any, index: any) => {
 
             
             return (
@@ -115,12 +170,16 @@ import Pagination from "@/src/components/pagination";
             );
           })}
         </ReusableTable>
-        <Pagination
-            onPageChange={handlePageChange}
-            totalPages={Number(getEmployeeData?.data?.max_page)}
-            currentPage={Number(page)}
-          />
+        {Number(page) <= Number(getEmployeeData?.data?.max_page) && (
+           <Pagination
+           onPageChange={handlePageChange}
+           totalPages={Number(getEmployeeData?.data?.max_page)}
+           currentPage={Number(page)}
+         />
+         
+        )}
       </div>
+      </Fragment>
     );
   };
   

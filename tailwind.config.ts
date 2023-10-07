@@ -19,7 +19,6 @@ const config: Config = {
           base: "#F1EFE4"
         }
     },
-   
     }
   },
   plugins: [],

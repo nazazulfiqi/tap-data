@@ -24,24 +24,12 @@ type ValidationSchema = z.infer<typeof validationSchemaLogin>;
 export const LoginModule : FC =  () => {
 
   const {data: session} = useSession();
-  console.log(session);
+  // console.log(session);
   
 
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [getError, setError] = useState<string | undefined | null>(undefined);
-
- 
-    
-
-    // const session = await getServerSession(authOptions);
-    // console.log(session);
-
-  
-    
-    // if (session) {
-    //     redirect('/dashboard');
-    // }
 
 
     const {
@@ -101,7 +89,7 @@ export const LoginModule : FC =  () => {
         <ErrorBoundary fallback={<>{getError}</>}>
         <div className="wrapper flex justify-center relative mt-0 min-h-[100vh] items-center">
       <div className="box flex w-[850px] h-full bg-[#F1EFE4] rounded-lg shadow-md shadow-slate-500">
-        <div className="box-left w-full md:w-1/2 h-screen md:h-full flex flex-col my-auto justify-center px-8">
+        <div className="box-left w-full lg:w-1/2 h-screen lg:h-full flex flex-col my-auto justify-center px-8">
           <h2 className="font-bold text-3xl mb-1">Welcome Back!</h2>
           <p className="text-sm mb-4">
             Enter your username and password to login

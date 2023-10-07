@@ -70,7 +70,7 @@ const data = {
   datasets: [
     {
       label: "MPP",
-      data: getRandomData(),
+      data: [40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000],
       backgroundColor: "#D97706",
     },
     {

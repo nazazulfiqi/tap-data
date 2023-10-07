@@ -1,3 +1,4 @@
+import { TMetaResponse } from "./metaResponse";
 
 
 export type TEmployeeItem = {
@@ -31,9 +32,7 @@ export type TEmployeeItem = {
   updatedAt: string;
 };
 
-export type TEmployeeResponse = {
-  status: number;
-  message: string;
+export type TEmployeeResponse = TMetaResponse & {
   data: {
     employees: TEmployeeItem[];
     page_size: number;

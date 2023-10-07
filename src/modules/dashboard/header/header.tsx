@@ -1,12 +1,16 @@
 import React, { FC } from "react";
 import cardItems from "./constant";
 import Card from "./card/card";
+import { useGetMpp } from "@/src/hooks/dashboard/hook";
 
-interface HeaderSectionProps {
-  // Define any props here if needed
-}
 
-const HeaderSection: FC<HeaderSectionProps> = () => {
+const HeaderSection: FC = () => {
+
+  const {data} = useGetMpp()
+
+  console.log("data", data);
+  
+
   return (
     <section className="w-full px-8">
       <h1 className="text-3xl font-bold text-center my-6">
