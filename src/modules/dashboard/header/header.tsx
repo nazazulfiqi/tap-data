@@ -1,14 +1,19 @@
 import React, { FC } from "react";
-import cardItems from "./constant";
 import Card from "./card/card";
-import { useGetMpp } from "@/src/hooks/dashboard/hook";
+import { useGetTotalData } from "@/src/hooks/dashboard/hook";
+import { LoadingSpinner } from "@/src/components/loading/spinner";
 
 
 const HeaderSection: FC = () => {
 
-  const {data} = useGetMpp()
+  const {data,isLoading} = useGetTotalData()
 
-  console.log("data", data);
+  if (isLoading) {
+    return <LoadingSpinner/>
+  }
+
+  console.log(data);
+  
   
 
   return (
@@ -17,9 +22,9 @@ const HeaderSection: FC = () => {
         DASHBOARD MPP VS MPE TAP GROUP TAHUN 2023
       </h1>
       <div className="flex justify-between gap-7">
-        {cardItems?.map((card, i) => (
+        {data?.data?.data?.map((card, i) => (
           <Card
-            amount={card.amount as number}
+            amount={card.total_data as number}
             title={card.title as string}
             key={i}
           />

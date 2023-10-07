@@ -2,8 +2,8 @@ import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { EmployeeDataState } from "../../recoil/atoms/dashboard";
 import { TEmployeeResponse, TuseEmployeeData } from "../../types/userData";
 import { useRecoilState } from "recoil";
-import { employeeGetRequest, totalMppGetRequest } from "./request";
-import { TMppResponse } from "@/src/types/mpp";
+import { employeeGetRequest, totalDataGetRequest } from "./request";
+import { TTotalDataResponse } from "@/src/types/mpp";
 
 export const useGetEmployee = (
   page: number,
@@ -23,8 +23,8 @@ export const useEmployeeData = (): TuseEmployeeData => {
     };
   };
 
-  export const useGetMpp = (): UseQueryResult<TMppResponse> =>
+  export const useGetTotalData = (): UseQueryResult<TTotalDataResponse> =>
       useQuery({
-        queryKey: ['mpp-get'],
-        queryFn: async () => await totalMppGetRequest(),
+        queryKey: ['total-data-get'],
+        queryFn: async () => await totalDataGetRequest(),
       });

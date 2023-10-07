@@ -1,7 +1,7 @@
-import { DATA_KARYAWAN, DATA_MPP } from "../../utils/constant/endpoints/dashboard";
+import { DATA_KARYAWAN, DATA_KARYAWAN_TOTAL } from "../../utils/constant/endpoints/dashboard";
 import { api } from "../../config/api/apiConfig";
 import { TEmployeeResponse } from "../../types/userData";
-import { TMppResponse } from "@/src/types/mpp";
+import { TTotalDataResponse } from "@/src/types/mpp";
 
 export const employeeGetRequest = async (
   page: number,
@@ -14,9 +14,9 @@ export const employeeGetRequest = async (
     return data;
   };
 
-  export const totalMppGetRequest = async (): Promise<TMppResponse> => {
+  export const totalDataGetRequest = async (): Promise<TTotalDataResponse> => {
       const { data } = await api.get(
-        `${DATA_MPP}`
+        `${DATA_KARYAWAN_TOTAL}`
       );
       return data;
     };

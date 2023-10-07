@@ -1,2 +1,2 @@
 export const DATA_KARYAWAN = '/data-karyawan';
-export const DATA_MPP = `${DATA_KARYAWAN}/mpp`;
+export const DATA_KARYAWAN_TOTAL = `${DATA_KARYAWAN}/total`;
