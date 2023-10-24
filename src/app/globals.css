@@ -38,3 +38,8 @@ html {
 .active {
   @apply bg-gray-200 text-black;
 }
+
+input:focus {
+  outline: none; /* Menghilangkan border saat fokus */
+  /* Atur properti lain sesuai kebutuhan */
+}

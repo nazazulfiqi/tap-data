@@ -2,17 +2,24 @@ import React, { FC } from "react";
 import Card from "./card/card";
 import { useGetTotalData } from "@/src/hooks/dashboard/hook";
 import { LoadingSpinner } from "@/src/components/loading/spinner";
+import { useRecoilValue } from "recoil";
+import { EmployeeDataState } from "@/src/recoil/atoms/dashboard";
 
 
 const HeaderSection: FC = () => {
 
-  const {data,isLoading} = useGetTotalData()
+  // const {data,isLoading} = useGetTotalData()
 
-  if (isLoading) {
-    return <LoadingSpinner/>
-  }
+const employeeData = useRecoilValue(EmployeeDataState);
+const mppTotal = employeeData?.data?.mpp_total;
+const mpeTotal = employeeData?.data?.mpe_total;
+const mpePlusPlanTotal = employeeData?.data?.mpe_plus_plan_total;
 
-  console.log(data);
+  // if (isLoading) {
+  //   return <LoadingSpinner/>
+  // }
+
+  // console.log(data);
   
   
 
@@ -22,13 +29,20 @@ const HeaderSection: FC = () => {
         DASHBOARD MPP VS MPE TAP GROUP TAHUN 2023
       </h1>
       <div className="flex justify-between gap-7">
-        {data?.data?.data?.map((card, i) => (
+    
           <Card
-            amount={card.total_data as number}
-            title={card.title as string}
-            key={i}
+            amount={mppTotal}
+            title="Total MPP"
           />
-        ))}
+          <Card
+            amount={mpeTotal}
+            title="Total MPE"
+          />
+          <Card
+            amount={mpePlusPlanTotal}
+            title="Total MPE + Plan"
+          />
+        
       </div>
     </section>
   );

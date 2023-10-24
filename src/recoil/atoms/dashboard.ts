@@ -7,6 +7,9 @@ export const EmployeeDataState = atom<TEmployeeResponse>({
         status: 0,
         message: '',
         data: {
+          mpp_total: 0,
+        mpe_total: 0,
+        mpe_plus_plan_total: 0,
           employees: [
 
           ],

@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Label, TextInput } from "flowbite-react";
 import { TextFieldProps } from "./types";
+import "../../app/globals.css"; 
 
 const TextFieldNormal: React.FC<TextFieldProps> = ({ prop, name, desc, widthInput, value,  onChange }) => {
   return (
@@ -10,7 +11,7 @@ const TextFieldNormal: React.FC<TextFieldProps> = ({ prop, name, desc, widthInpu
           <Label htmlFor="base" value={`${name}`} />
           <p className="text-[12px]">{desc ? desc : ""}</p>
         </div>
-        <TextInput id="base" sizing="sm" type="text" className="w-full border-2 border-black rounded-lg focus:border-none" value={value} onChange={onChange} />
+        <TextInput id="base" sizing="sm" type="text" className="w-full border border-black rounded-lg focus:border-none" value={value} onChange={onChange} />
       </div>
     </Fragment>
   );

@@ -34,6 +34,9 @@ export type TEmployeeItem = {
 
 export type TEmployeeResponse = TMetaResponse & {
   data: {
+    mpp_total: number,
+    mpe_total: number,
+    mpe_plus_plan_total: number,
     employees: TEmployeeItem[];
     page_size: number;
     total_data: number;

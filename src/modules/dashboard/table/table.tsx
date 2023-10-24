@@ -9,6 +9,9 @@ import { LoadingSpinner } from "@/src/components/loading/spinner";
 import { Button } from "@/src/components/button/button";
 import TextFieldNormal from "@/src/components/textfield";
 import SelectBox from "../../../components/selectbox";
+import { MdChevronRight } from "react-icons/md";
+import Dropdown from "@/src/components/dropdown";
+import IconArrowDown from "@/src/components/icons/ic-arrow-down";
 
 
 export function useDebounce(
@@ -26,6 +29,7 @@ export function useDebounce(
   
   export const TableSection: FC = () => {
 
+
     const columns = [
       { header: "Position Description", className: "w-[200px]" },
       { header: "NIK", hasSorting: true, className: "text-center", sort_by: "nik" },
@@ -41,14 +45,16 @@ export function useDebounce(
     const router = useRouter();
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get('search') || '';
+    const page = searchParams.get('page') || '1';
 
     const [option, setOption] = useState({
       limit: 10,
-      page: 1,
+      page: parseInt(page),
       search: "",
     });
 
-    const page = searchParams.get('page') || '1';
+    
+
 
     const {data, refetch, isLoading} = useGetEmployee(
       option.page,
@@ -68,8 +74,8 @@ export function useDebounce(
 
     useDebounce(
       () => {
-        setOption((prev) => ({ ...prev, search: deb, page: 1 }));
-        router.replace(`/dashboard?page=1&search=${deb}`);
+        setOption((prev) => ({ ...prev, search: deb }));
+        router.push(`/dashboard?page=1&search=${deb}`);
       },
       [deb],
       700
@@ -106,20 +112,101 @@ export function useDebounce(
           <div className="w-full">
             <TextFieldNormal name="KEYWORD" prop="block" desc="Note: The user can search on Regional, Division Description, Position Description, Status Plan Fulfillment" widthInput="w-full" value={deb} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDeb(e.target.value)}/>
           </div>
-          <div className="flex space-x-4">
-            <SelectBox />
-            <SelectBox />
-            <SelectBox />
+          <div className="flex gap-x-4">
+          <Dropdown
+         placeholder={"Unit Bisnis"}
+         dataOptions={["Test"]}
+         reverse={false}
+          textCentre={true}
+          icons={<IconArrowDown/>}
+          shadow={false}
+          bold={false}
+          // onChange={handleFacultyFilter}
+        />
+          <Dropdown
+         placeholder={"Unit Bisnis"}
+         dataOptions={["Test"]}
+         reverse={false}
+          textCentre={true}
+          icons={<IconArrowDown/>}
+          shadow={false}
+          bold={false}
+          // onChange={handleFacultyFilter}
+        />
+        <Dropdown
+         placeholder={"Unit Bisnis"}
+         dataOptions={["Test"]}
+         reverse={false}
+          textCentre={true}
+          icons={<IconArrowDown/>}
+          shadow={false}
+          bold={false}
+          // onChange={handleFacultyFilter}
+        />
           </div>
           <div className="flex space-x-4">
-            <SelectBox />
-            <SelectBox />
-            <SelectBox />
+          <Dropdown
+         placeholder={"Unit Bisnis"}
+         dataOptions={["Test"]}
+         reverse={false}
+          textCentre={true}
+          icons={<IconArrowDown/>}
+          shadow={false}
+          bold={false}
+          // onChange={handleFacultyFilter}
+        />
+          <Dropdown
+         placeholder={"Unit Bisnis"}
+         dataOptions={["Test"]}
+         reverse={false}
+          textCentre={true}
+          icons={<IconArrowDown/>}
+          shadow={false}
+          bold={false}
+          // onChange={handleFacultyFilter}
+        />
+        <Dropdown
+         placeholder={"Unit Bisnis"}
+         dataOptions={["Test"]}
+         reverse={false}
+          textCentre={true}
+          icons={<IconArrowDown/>}
+          shadow={false}
+          bold={false}
+          // onChange={handleFacultyFilter}
+        />
           </div>
           <div className="flex space-x-4">
-            <SelectBox />
-            <SelectBox />
-            <SelectBox />
+          <Dropdown
+         placeholder={"Unit Bisnis"}
+         dataOptions={["Test"]}
+         reverse={false}
+          textCentre={true}
+          icons={<IconArrowDown/>}
+          shadow={false}
+          bold={false}
+          // onChange={handleFacultyFilter}
+        />
+          <Dropdown
+         placeholder={"Unit Bisnis"}
+         dataOptions={["Test"]}
+         reverse={false}
+          textCentre={true}
+          icons={<IconArrowDown/>}
+          shadow={false}
+          bold={false}
+          // onChange={handleFacultyFilter}
+        />
+        <Dropdown
+         placeholder={"Unit Bisnis"}
+         dataOptions={["Test"]}
+         reverse={false}
+          textCentre={true}
+          icons={<IconArrowDown/>}
+          shadow={false}
+          bold={false}
+          // onChange={handleFacultyFilter}
+        />
           </div>
         </div>
         <div className="flex mt-5 gap-x-4 justify-end">

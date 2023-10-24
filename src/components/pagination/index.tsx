@@ -49,7 +49,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: Tpagination) => {
   return (
     <div className="flex items-center justify-center my-4">
       <button
-        className="group p-2 rounded-md hover:bg-primary-base text-sm disabled:bg-white"
+        className="group p-2 rounded-md hover:bg-cream-base text-sm disabled:bg-white disabled:cursor-not-allowed"
         onClick={handlePrevClick}
         disabled={currentPage === 1}
       >
@@ -81,7 +81,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: Tpagination) => {
       </div>
 
       <button
-        className="group p-2 text-sm rounded-md hover:bg-blue-base disabled:bg-white"
+        className="group p-2 text-sm rounded-md hover:bg-cream-base disabled:bg-white disabled:cursor-not-allowed"
         onClick={handleNextClick}
         disabled={currentPage === totalPages}
       >

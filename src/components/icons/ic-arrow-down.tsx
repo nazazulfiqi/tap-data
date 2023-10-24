@@ -1,6 +1,6 @@
 import React from "react";
 
-const IconArrow: React.FC = () => {
+const IconArrowDown: React.FC = () => {
   return (
     <svg
       width="12"
@@ -17,4 +17,4 @@ const IconArrow: React.FC = () => {
   );
 };
 
-export default IconArrow;
+export default IconArrowDown;

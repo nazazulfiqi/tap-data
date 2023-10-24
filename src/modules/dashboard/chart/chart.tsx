@@ -13,7 +13,7 @@ const ChartSection: FC = () => {
             CHART MPP VS MPE TAP GROUP TAHUN 2023
           </h1>
           <div className="flex gap-4">
-            <MenuDropdown />
+            <MenuDropdown/>
             <MenuDropdown />
             <MenuDropdown />
           </div>
