@@ -117,14 +117,16 @@ export const LoginModule : FC =  () => {
               message={errors.password?.message}
               required
             />
+            <div className="px-14">
             <Button
-              className="bg-[#9F9F9F] rounded-md w-1/3 py-2 font-bold border-black border-2 mx-auto mt-6"
+              className="bg-[#9F9F9F] rounded-md w-full py-2 font-bold border-black border-2 mx-auto mt-6"
               type="submit"
               disabled={!isValid}
               loading={loading ? 'Sedang Masuk..' : ''}
             >
               DONE
             </Button>
+            </div>
           </form>
           <ToastContainer />
         </div>

@@ -3,7 +3,7 @@
  import { useRouter, useSearchParams } from "next/navigation";
 import dataStatic from "./constant";
 import { ReusableTable } from "@/src/components/table";
-import { useEmployeeData, useGetEmployee } from "@/src/hooks/dashboard/hook";
+import { useEmployeeData, useGetBusinessUnit, useGetEmployee } from "@/src/hooks/dashboard/hook";
 import Pagination from "@/src/components/pagination";
 import { LoadingSpinner } from "@/src/components/loading/spinner";
 import { Button } from "@/src/components/button/button";
@@ -42,6 +42,7 @@ export function useDebounce(
   
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
     const [sortColumn, setSortColumn] = useState<string>("_id");
+    const [businessUnit, setBusinessUnit] = useState<string>("");
     const router = useRouter();
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get('search') || '';
@@ -51,6 +52,7 @@ export function useDebounce(
       limit: 10,
       page: parseInt(page),
       search: "",
+      businessUnit: "",
     });
 
     
@@ -60,6 +62,7 @@ export function useDebounce(
       option.page,
       option.limit,
       searchQuery,
+      businessUnit
     )
 
     const [deb, setDeb] = useState(searchQuery);
@@ -69,7 +72,6 @@ export function useDebounce(
       setOption(option);
     }, [option]);
 
-    // console.log(listEmployeeData);
     
 
     useDebounce(
@@ -103,7 +105,17 @@ export function useDebounce(
         setSortOrder("asc");
       }
     };
-  
+
+    const {data: dataBusinessUnit, refetch: refetchBusinessUnit, isLoading: isLoadingBusinessUnit} = useGetBusinessUnit()
+
+    const handleBusinessFilter = (selectedBusinessUnit: string) => {
+      setBusinessUnit(selectedBusinessUnit);
+      setOption((prev) => ({ ...prev, page: 1, businessUnit: selectedBusinessUnit }));
+      router.push(`/dashboard?business_unit_description=${selectedBusinessUnit}&page=${page}&search=${deb}`);
+      
+    }
+    
+
     return (
       <Fragment>
           <section className="w-full mt-4 px-8">
@@ -113,16 +125,19 @@ export function useDebounce(
             <TextFieldNormal name="KEYWORD" prop="block" desc="Note: The user can search on Regional, Division Description, Position Description, Status Plan Fulfillment" widthInput="w-full" value={deb} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDeb(e.target.value)}/>
           </div>
           <div className="flex gap-x-4">
+          <div className="w-full gap-y-2 flex flex-col">
+          <label htmlFor="">Unit Bisnis</label>
           <Dropdown
          placeholder={"Unit Bisnis"}
-         dataOptions={["Test"]}
+         dataOptions={dataBusinessUnit?.data || []}
          reverse={false}
           textCentre={true}
           icons={<IconArrowDown/>}
           shadow={false}
           bold={false}
-          // onChange={handleFacultyFilter}
+          onChange={handleBusinessFilter}
         />
+        </div>
           <Dropdown
          placeholder={"Unit Bisnis"}
          dataOptions={["Test"]}
