@@ -12,11 +12,6 @@ const ChartSection: FC = () => {
           <h1 className="text-lg font-bold">
             CHART MPP VS MPE TAP GROUP TAHUN 2023
           </h1>
-          <div className="flex gap-4">
-            <MenuDropdown/>
-            <MenuDropdown />
-            <MenuDropdown />
-          </div>
         </section>
         <section className="flex justify-between items-center">
           <p className="text-sm text-gray-500">Data Periode Tahun 2023</p>

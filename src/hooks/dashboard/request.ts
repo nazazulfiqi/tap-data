@@ -1,17 +1,18 @@
-import { BUSINESS_UNIT, DATA_KARYAWAN, DATA_KARYAWAN_TOTAL } from "../../utils/constant/endpoints/dashboard";
+import { BUSINESS_UNIT, DATA_KARYAWAN, DATA_KARYAWAN_TOTAL, GROUP, REGIONAL } from "../../utils/constant/endpoints/dashboard";
 import { api } from "../../config/api/apiConfig";
 import { TEmployeeResponse } from "../../types/userData";
 import { TTotalDataResponse } from "@/src/types/mpp";
-import { TBusinessResponse } from "@/src/types/dashboard";
+import { TDropdownDashboardResponse } from "@/src/types/dashboard";
 
 export const employeeGetRequest = async (
   page: number,
   limit: number,
   search: string,
-  businessUnit: string
+  businessUnit: string,
+  regional: string,
 ): Promise<TEmployeeResponse> => {
     const { data } = await api.get(
-      `${DATA_KARYAWAN}?business_unit_description=${businessUnit}&page=${page}&limit=${limit}&search=${search}`
+      `${DATA_KARYAWAN}?business_unit_description=${businessUnit}&regional=${regional}&page=${page}&limit=${limit}&search=${search}`
     );
     console.log(data);
     
@@ -26,9 +27,29 @@ export const employeeGetRequest = async (
     };
   
 
-export const businessUnitRequest = async (): Promise<TBusinessResponse> => {
+export const businessUnitRequest = async (): Promise<TDropdownDashboardResponse> => {
     const { data } = await api.get(
       `${BUSINESS_UNIT}`
     );
     return data;
+}
+
+export const regionalRequest = async (): Promise<TDropdownDashboardResponse> => {
+  const { data } = await api.get(
+    `${REGIONAL}`
+  );
+  return data;
+}
+export const groupRequest = async (): Promise<TDropdownDashboardResponse> => {
+  const { data } = await api.get(
+    `${GROUP}`
+  );
+  return data;
+}
+
+export const loctionDescriptionRequest = async (): Promise<TDropdownDashboardResponse> => {
+  const { data } = await api.get(
+    `${GROUP}`
+  );
+  return data;
 }

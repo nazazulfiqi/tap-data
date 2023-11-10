@@ -43,7 +43,7 @@ const Dropdown = ({
               onClick={() => handleOptionSelect(option)}
               className={`${
                 textCentre ? 'text-center' : 'text-start'
-              } block w-full p-3 text-neutral-600 hover:bg-cream-base hover:text-black focus:outline-none`}
+              } block w-full p-2 text-neutral-600 hover:bg-cream-base hover:text-black focus:outline-none`}
             >
               <p className={`${bold ? 'font-semibold' : ''}`}>{option}</p>
             </button>

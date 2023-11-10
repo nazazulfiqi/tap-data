@@ -1,3 +1,11 @@
 export const DATA_KARYAWAN = '/data-karyawan';
 export const DATA_KARYAWAN_TOTAL = `${DATA_KARYAWAN}/total`;
 export const BUSINESS_UNIT = '/properties/business'
+export const REGIONAL = '/properties/regional'
+export const GROUP = '/properties/group'
+export const LOCATION_DESCRIPTION = '/properties/location-description'
+export const DIRECTORAT_DESCRIPTION = '/properties/directorat-description'
+export const DIVISION_DESCRIPTION = '/properties/division-description'
+export const STATUS = '/properties/status'
+export const POSITION_DESCRIPTION = '/properties/position-description'
+export const STATUS_PLAN_FULFILLMENT = '/properties/status-plan-fulfillment'

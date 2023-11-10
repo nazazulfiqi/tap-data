@@ -1,7 +1,7 @@
 import { TMetaResponse } from "./metaResponse";
 
-export type TBusinessItem = {
+export type TDropdownDashboard = {
     data: []
 }
 
-export type TBusinessResponse = TBusinessItem & TMetaResponse;
+export type TDropdownDashboardResponse = TDropdownDashboard & TMetaResponse;
