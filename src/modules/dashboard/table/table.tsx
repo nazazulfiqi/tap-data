@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import dataStatic from "./constant";
 import { ReusableTable } from "@/src/components/table";
 import {
@@ -65,10 +65,24 @@ export const TableSection: FC = () => {
   const [sortColumn, setSortColumn] = useState<string>("_id");
   const [businessUnit, setBusinessUnit] = useState<string>("");
   const [regional, setRegional] = useState<string>("");
+  const [group, setGroup] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  const [directorat, setDirectorat] = useState<string>("");
+  const [division, setDivision] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
+  const [position, setPosition] = useState<string>("");
+  const [statusPlanFulfillment, setStatusPlanFulfillment] = useState<string>("");
   const router = useRouter();
   const searchParams = useSearchParams();
+  const allParams = searchParams.values();
   const searchQuery = searchParams.get("search") || "";
   const page = searchParams.get("page") || "1";
+
+  
+
+
+  
+  
 
   const [option, setOption] = useState({
     limit: 10,
@@ -76,6 +90,13 @@ export const TableSection: FC = () => {
     search: "",
     businessUnit: "",
     regional: "",
+    group: "",
+    location: "",
+    directorat: "",
+    division: "",
+    status: "",
+    position: "",
+    statusPlanFulfillment: "",
   });
 
   const { data, refetch, isLoading } = useGetEmployee(
@@ -83,7 +104,14 @@ export const TableSection: FC = () => {
     option.limit,
     searchQuery,
     businessUnit,
-    regional
+    regional,
+    group,
+    location,
+    directorat,
+    division,
+    status,
+    position,
+    statusPlanFulfillment
   );
 
   const [deb, setDeb] = useState(searchQuery);
@@ -156,42 +184,71 @@ export const TableSection: FC = () => {
     refetch: refetchGroup,
     isLoading: isLoadingGroup,
   } = useGetGroup();
+  const handleGroupFilter = (selectedGroup: string) => {
+    setGroup(selectedGroup);
+    setOption((prev) => ({ ...prev, page: 1, group: selectedGroup }));
+  };
 
   const {
     data: dataLocation,
     refetch: refetchLocation,
     isLoading: isLoadingLocation,
   } = useGetLocation();
+  const handleLocationFilter = (selectedLocation: string) => {
+    setLocation(selectedLocation);
+    setOption((prev) => ({ ...prev, page: 1, location: selectedLocation }));
+  };
 
   const {
     data: dataDirectorat,
     refetch: refetchDirectorat,
     isLoading: isLoadingDirectorat,
   } = useGetDirectorat();
+  const handleDirectoratFilter = (selectedDirectorat: string) => {
+    setDirectorat(selectedDirectorat);
+    setOption((prev) => ({ ...prev, page: 1, directorat: selectedDirectorat }));
+  };
 
   const {
     data: dataDivision,
     refetch: refetchDivision,
     isLoading: isLoadingDivision,
   } = useGetDivision();
+  const handleDivisionFilter = (selectedDivision: string) => {
+    setDivision(selectedDivision);
+    setOption((prev) => ({ ...prev, page: 1, division: selectedDivision }));
+  };
 
   const {
     data: dataStatus,
     refetch: refetchStatus,
     isLoading: isLoadingStatus,
   } = useGetStatus();
+  const handleStatusFilter = (selectedStatus: string) => {
+    setStatus(selectedStatus);
+    setOption((prev) => ({ ...prev, page: 1, status: selectedStatus }));
+  };
 
   const {
     data: dataPosition,
     refetch: refetchPosition,
     isLoading: isLoadingPosition,
   } = useGetPosition();
+  const handlePositionFilter = (selectedPosition: string) => {
+    setPosition(selectedPosition);
+    setOption((prev) => ({ ...prev, page: 1, position: selectedPosition }));
+  };
 
   const {
     data: dataStatusPlanFulfillment,
     refetch: refetchStatusPlanFulfillment,
     isLoading: isLoadingStatusPlanFulfillment,
   } = useGetStatusPlanFulfillment();
+  const handleStatusPlanFilter = (selectedStatusPlanFulfillment: string) => {
+    setStatusPlanFulfillment(selectedStatusPlanFulfillment);
+    setOption((prev) => ({ ...prev, page: 1, statusPlanFulfillment: selectedStatusPlanFulfillment }));
+  };
+
 
   return (
     <Fragment>
@@ -253,7 +310,7 @@ export const TableSection: FC = () => {
                   icons={<IconArrowDown />}
                   shadow={false}
                   bold={false}
-                  onChange={handleRegionalFilter}
+                  onChange={handleGroupFilter}
                 />
               </div>
             </div>
@@ -270,7 +327,7 @@ export const TableSection: FC = () => {
                   icons={<IconArrowDown />}
                   shadow={false}
                   bold={false}
-                  onChange={handleRegionalFilter}
+                  onChange={handleLocationFilter}
                 />
               </div>
               <div className="w-full gap-y-2 flex flex-col">
@@ -285,7 +342,7 @@ export const TableSection: FC = () => {
                   icons={<IconArrowDown />}
                   shadow={false}
                   bold={false}
-                  onChange={handleRegionalFilter}
+                  onChange={handleDirectoratFilter}
                 />
               </div>
               <div className="w-full gap-y-2 flex flex-col">
@@ -300,7 +357,7 @@ export const TableSection: FC = () => {
                   icons={<IconArrowDown />}
                   shadow={false}
                   bold={false}
-                  onChange={handleRegionalFilter}
+                  onChange={handleDivisionFilter}
                 />
               </div>
             </div>
@@ -317,7 +374,7 @@ export const TableSection: FC = () => {
                   icons={<IconArrowDown />}
                   shadow={false}
                   bold={false}
-                  onChange={handleRegionalFilter}
+                  onChange={handleStatusFilter}
                 />
               </div>
               <div className="w-full gap-y-2 flex flex-col">
@@ -332,7 +389,7 @@ export const TableSection: FC = () => {
                   icons={<IconArrowDown />}
                   shadow={false}
                   bold={false}
-                  onChange={handleRegionalFilter}
+                  onChange={handlePositionFilter}
                 />
               </div>
               <div className="w-full gap-y-2 flex flex-col">
@@ -347,7 +404,7 @@ export const TableSection: FC = () => {
                   icons={<IconArrowDown />}
                   shadow={false}
                   bold={false}
-                  onChange={handleRegionalFilter}
+                  onChange={handleStatusPlanFilter}
                 />
               </div>
             </div>

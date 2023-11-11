@@ -10,11 +10,18 @@ export const employeeGetRequest = async (
   search: string,
   businessUnit: string,
   regional: string,
+  group: string,
+  location: string,
+  directorat: string,
+  division: string,
+  status: string,
+  position: string,
+  statusPlanFulfillment: string
 ): Promise<TEmployeeResponse> => {
     const { data } = await api.get(
-      `${DATA_KARYAWAN}?business_unit_description=${businessUnit}&regional=${regional}&page=${page}&limit=${limit}&search=${search}`
+      `${DATA_KARYAWAN}?business_unit_description=${businessUnit}&regional=${regional}&group=${group}&location_description=${location}&directorat_description=${directorat}&division_description=${division}&status=${status}&position_description=${position}&status_plan_fulfillment=${statusPlanFulfillment}&page=${page}&limit=${limit}&search=${search}`
     );
-    console.log(data);
+    // console.log(data);
     
     return data;
   };

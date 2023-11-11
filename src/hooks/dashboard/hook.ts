@@ -23,12 +23,19 @@ export const useGetEmployee = (
   limit: number,
   search: string,
   businessUnit: string,
-  regional: string
+  regional: string,
+  group: string,
+  location: string,
+  directorat: string,
+  division: string,
+  status: string,
+  position: string,
+  statusPlanFulfillment: string
 ): UseQueryResult<TEmployeeResponse> =>
   useQuery({
-    queryKey: ["employee-get", page, limit, search, businessUnit, regional],
+    queryKey: ["employee-get", page, limit, search, businessUnit, regional, group, location, directorat, division, status, position, statusPlanFulfillment],
     queryFn: async () =>
-      await employeeGetRequest(page, limit, search, businessUnit, regional),
+      await employeeGetRequest(page, limit, search, businessUnit, regional, group, location, directorat, division, status, position, statusPlanFulfillment),
   });
 
 export const useEmployeeData = (): TuseEmployeeData => {
