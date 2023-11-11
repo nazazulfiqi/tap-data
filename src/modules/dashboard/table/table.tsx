@@ -13,9 +13,15 @@ import { ReusableTable } from "@/src/components/table";
 import {
   useEmployeeData,
   useGetBusinessUnit,
+  useGetDirectorat,
+  useGetDivision,
   useGetEmployee,
   useGetGroup,
+  useGetLocation,
+  useGetPosition,
   useGetRegional,
+  useGetStatus,
+  useGetStatusPlanFulfillment,
 } from "@/src/hooks/dashboard/hook";
 import Pagination from "@/src/components/pagination";
 import { LoadingSpinner } from "@/src/components/loading/spinner";
@@ -151,6 +157,42 @@ export const TableSection: FC = () => {
     isLoading: isLoadingGroup,
   } = useGetGroup();
 
+  const {
+    data: dataLocation,
+    refetch: refetchLocation,
+    isLoading: isLoadingLocation,
+  } = useGetLocation();
+
+  const {
+    data: dataDirectorat,
+    refetch: refetchDirectorat,
+    isLoading: isLoadingDirectorat,
+  } = useGetDirectorat();
+
+  const {
+    data: dataDivision,
+    refetch: refetchDivision,
+    isLoading: isLoadingDivision,
+  } = useGetDivision();
+
+  const {
+    data: dataStatus,
+    refetch: refetchStatus,
+    isLoading: isLoadingStatus,
+  } = useGetStatus();
+
+  const {
+    data: dataPosition,
+    refetch: refetchPosition,
+    isLoading: isLoadingPosition,
+  } = useGetPosition();
+
+  const {
+    data: dataStatusPlanFulfillment,
+    refetch: refetchStatusPlanFulfillment,
+    isLoading: isLoadingStatusPlanFulfillment,
+  } = useGetStatusPlanFulfillment();
+
   return (
     <Fragment>
       <section className="w-full mt-4 px-8">
@@ -222,7 +264,7 @@ export const TableSection: FC = () => {
                 </label>
                 <Dropdown
                   placeholder={"Location Description"}
-                  dataOptions={dataGroup?.data || []}
+                  dataOptions={dataLocation?.data || []}
                   reverse={false}
                   textCentre={false}
                   icons={<IconArrowDown />}
@@ -231,58 +273,83 @@ export const TableSection: FC = () => {
                   onChange={handleRegionalFilter}
                 />
               </div>
-              <Dropdown
-                placeholder={"Unit Bisnis"}
-                dataOptions={["Test"]}
-                reverse={false}
-                textCentre={true}
-                icons={<IconArrowDown />}
-                shadow={false}
-                bold={false}
-                // onChange={handleFacultyFilter}
-              />
-              <Dropdown
-                placeholder={"Unit Bisnis"}
-                dataOptions={["Test"]}
-                reverse={false}
-                textCentre={true}
-                icons={<IconArrowDown />}
-                shadow={false}
-                bold={false}
-                // onChange={handleFacultyFilter}
-              />
+              <div className="w-full gap-y-2 flex flex-col">
+                <label htmlFor="" className="font-medium text-sm">
+                DIRECTORAT DESCRIPTION
+                </label>
+                <Dropdown
+                  placeholder={"Directorat Description"}
+                  dataOptions={dataDirectorat?.data || []}
+                  reverse={false}
+                  textCentre={false}
+                  icons={<IconArrowDown />}
+                  shadow={false}
+                  bold={false}
+                  onChange={handleRegionalFilter}
+                />
+              </div>
+              <div className="w-full gap-y-2 flex flex-col">
+                <label htmlFor="" className="font-medium text-sm">
+                DIVISION DESCRIPTION
+                </label>
+                <Dropdown
+                  placeholder={"Division Description"}
+                  dataOptions={dataDivision?.data || []}
+                  reverse={false}
+                  textCentre={false}
+                  icons={<IconArrowDown />}
+                  shadow={false}
+                  bold={false}
+                  onChange={handleRegionalFilter}
+                />
+              </div>
             </div>
             <div className="flex space-x-4">
-              <Dropdown
-                placeholder={"Unit Bisnis"}
-                dataOptions={["Test"]}
-                reverse={false}
-                textCentre={true}
-                icons={<IconArrowDown />}
-                shadow={false}
-                bold={false}
-                // onChange={handleFacultyFilter}
-              />
-              <Dropdown
-                placeholder={"Unit Bisnis"}
-                dataOptions={["Test"]}
-                reverse={false}
-                textCentre={true}
-                icons={<IconArrowDown />}
-                shadow={false}
-                bold={false}
-                // onChange={handleFacultyFilter}
-              />
-              <Dropdown
-                placeholder={"Unit Bisnis"}
-                dataOptions={["Test"]}
-                reverse={false}
-                textCentre={true}
-                icons={<IconArrowDown />}
-                shadow={false}
-                bold={false}
-                // onChange={handleFacultyFilter}
-              />
+            <div className="w-full gap-y-2 flex flex-col">
+                <label htmlFor="" className="font-medium text-sm">
+                STATUS
+                </label>
+                <Dropdown
+                  placeholder={"Status"}
+                  dataOptions={dataStatus?.data || []}
+                  reverse={false}
+                  textCentre={false}
+                  icons={<IconArrowDown />}
+                  shadow={false}
+                  bold={false}
+                  onChange={handleRegionalFilter}
+                />
+              </div>
+              <div className="w-full gap-y-2 flex flex-col">
+                <label htmlFor="" className="font-medium text-sm">
+                POSITION DESCRIPTION
+                </label>
+                <Dropdown
+                  placeholder={"Position Description"}
+                  dataOptions={dataPosition?.data || []}
+                  reverse={false}
+                  textCentre={false}
+                  icons={<IconArrowDown />}
+                  shadow={false}
+                  bold={false}
+                  onChange={handleRegionalFilter}
+                />
+              </div>
+              <div className="w-full gap-y-2 flex flex-col">
+                <label htmlFor="" className="font-medium text-sm">
+                STATUS PLAN FULFILLMENT
+                </label>
+                <Dropdown
+                  placeholder={"Status Plan Fulfillment"}
+                  dataOptions={dataStatusPlanFulfillment?.data || []}
+                  reverse={false}
+                  textCentre={false}
+                  icons={<IconArrowDown />}
+                  shadow={false}
+                  bold={false}
+                  onChange={handleRegionalFilter}
+                />
+              </div>
             </div>
           </div>
           <div className="flex mt-5 gap-x-4 justify-end">

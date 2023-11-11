@@ -36,7 +36,7 @@ const Dropdown = ({
         {icons}
       </button>
       {isOpen && (
-        <div className="z-50 absolute mt-2 py-2 w-full bg-white rounded-[3px] shadow-lg">
+        <div className="z-50 absolute mt-2 py-2 w-full bg-white rounded-[3px] shadow-lg max-h-40 overflow-y-auto">
           {dataOptions?.map((option, index) => (
             <button
               key={index}

@@ -1,4 +1,4 @@
-import { BUSINESS_UNIT, DATA_KARYAWAN, DATA_KARYAWAN_TOTAL, GROUP, REGIONAL } from "../../utils/constant/endpoints/dashboard";
+import { BUSINESS_UNIT, DATA_KARYAWAN, DATA_KARYAWAN_TOTAL, DIRECTORAT_DESCRIPTION, DIVISION_DESCRIPTION, GROUP, LOCATION_DESCRIPTION, POSITION_DESCRIPTION, REGIONAL, STATUS, STATUS_PLAN_FULFILLMENT } from "../../utils/constant/endpoints/dashboard";
 import { api } from "../../config/api/apiConfig";
 import { TEmployeeResponse } from "../../types/userData";
 import { TTotalDataResponse } from "@/src/types/mpp";
@@ -47,9 +47,44 @@ export const groupRequest = async (): Promise<TDropdownDashboardResponse> => {
   return data;
 }
 
-export const loctionDescriptionRequest = async (): Promise<TDropdownDashboardResponse> => {
+export const locationDescriptionRequest = async (): Promise<TDropdownDashboardResponse> => {
   const { data } = await api.get(
-    `${GROUP}`
+    `${LOCATION_DESCRIPTION}`
+  );
+  return data;
+}
+
+export const directoratDescriptionRequest = async (): Promise<TDropdownDashboardResponse> => {
+  const { data } = await api.get(
+    `${DIRECTORAT_DESCRIPTION}`
+  );
+  return data;
+}
+
+export const divisionDescriptionRequest = async (): Promise<TDropdownDashboardResponse> => {
+  const { data } = await api.get(
+    `${DIVISION_DESCRIPTION}`
+  );
+  return data;
+}
+
+export const statusRequest = async (): Promise<TDropdownDashboardResponse> => {
+  const { data } = await api.get(
+    `${STATUS}`
+  );
+  return data;
+}
+
+export const positionDescriptionRequest = async (): Promise<TDropdownDashboardResponse> => {
+  const { data } = await api.get(
+    `${POSITION_DESCRIPTION}`
+  );
+  return data;
+}
+
+export const statusPlanFulfillmentRequest = async (): Promise<TDropdownDashboardResponse> => {
+  const { data } = await api.get(
+    `${STATUS_PLAN_FULFILLMENT}`
   );
   return data;
 }

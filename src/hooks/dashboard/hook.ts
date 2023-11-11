@@ -4,9 +4,15 @@ import { TEmployeeResponse, TuseEmployeeData } from "../../types/userData";
 import { useRecoilState } from "recoil";
 import {
   businessUnitRequest,
+  directoratDescriptionRequest,
+  divisionDescriptionRequest,
   employeeGetRequest,
   groupRequest,
+  locationDescriptionRequest,
+  positionDescriptionRequest,
   regionalRequest,
+  statusPlanFulfillmentRequest,
+  statusRequest,
   totalDataGetRequest,
 } from "./request";
 import { TTotalDataResponse } from "@/src/types/mpp";
@@ -57,3 +63,39 @@ export const useGetRegional = (): UseQueryResult<TDropdownDashboardResponse> =>
     queryKey: ['group'],
     queryFn: async () => await groupRequest(),
   });  
+
+  export const useGetLocation = (): UseQueryResult<TDropdownDashboardResponse> =>
+  useQuery({
+    queryKey: ['location'],
+    queryFn: async () => await locationDescriptionRequest(),
+  });  
+
+  export const useGetDirectorat = (): UseQueryResult<TDropdownDashboardResponse> =>
+  useQuery({
+    queryKey: ['directorat'],
+    queryFn: async () => await directoratDescriptionRequest(),
+  });
+  
+  export const useGetDivision = (): UseQueryResult<TDropdownDashboardResponse> =>
+  useQuery({
+    queryKey: ['division'],
+    queryFn: async () => await divisionDescriptionRequest(),
+  });
+
+  export const useGetStatus = (): UseQueryResult<TDropdownDashboardResponse> =>
+  useQuery({
+    queryKey: ['status'],
+    queryFn: async () => await statusRequest(),
+  }); 
+
+  export const useGetPosition = (): UseQueryResult<TDropdownDashboardResponse> =>
+  useQuery({
+    queryKey: ['position'],
+    queryFn: async () => await positionDescriptionRequest(),
+  }); 
+
+  export const useGetStatusPlanFulfillment = (): UseQueryResult<TDropdownDashboardResponse> =>
+  useQuery({
+    queryKey: ['status-plan-fulfillment'],
+    queryFn: async () => await statusPlanFulfillmentRequest(),
+  }); 
