@@ -37,6 +37,11 @@ export type TEmployeeResponse = TMetaResponse & {
     mpp_total: number,
     mpe_total: number,
     mpe_plus_plan_total: number,
+    fulfill: number,
+    vacant: number,
+    closed: number,
+    over_mpp: number,
+    fptk_over_mpp: number,    
     employees: TEmployeeItem[];
     page_size: number;
     total_data: number;
