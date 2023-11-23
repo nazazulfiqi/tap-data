@@ -9,9 +9,32 @@ const HeaderSection: FC = () => {
   // const {data,isLoading} = useGetTotalData()
 
   const employeeData = useRecoilValue(EmployeeDataState);
-  const mppTotal = employeeData?.data?.filter[0]?.mpp_total;
-  const mpeTotal = employeeData?.data?.filter[0]?.mpe_total;
-  const mpePlusPlanTotal = employeeData?.data?.filter[0]?.mpe_plus_plan_total;
+  const location = employeeData?.data?.filter?.map((item) => {
+    return item?.location;
+  });
+  const mppTotal = employeeData?.data?.filter?.map((item) => {
+    return item?.mpp_total;
+  });
+  const mpeTotal = employeeData?.data?.filter?.map((item) => {
+    return item?.mpe_total;
+  });
+  const mpe_plus_plan_total = employeeData?.data?.filter?.map((item) => {
+    return item?.mpe_plus_plan_total;
+  });
+
+  const sumMpp: number = mppTotal?.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+  const sumMpe: number = mpeTotal?.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+  const sumMpePlusPlan: number = mpe_plus_plan_total?.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+
   const mpevsmpp = employeeData?.data?.mpe_vs_mpp;
   const fulfill = employeeData?.data?.fulfill;
   const vacant = employeeData?.data?.vacant;
@@ -34,9 +57,9 @@ const HeaderSection: FC = () => {
       </h1>
       <div className="grid grid-cols-1 gap-4">
         <div className="grid grid-cols-4 gap-x-4">
-          <Card amount={mppTotal} title="Total MPP" />
-          <Card amount={mpeTotal} title="Total MPE" />
-          <Card amount={mpePlusPlanTotal} title="Total MPE + Plan" />
+          <Card amount={sumMpp} title="Total MPP" />
+          <Card amount={sumMpe} title="Total MPE" />
+          <Card amount={sumMpePlusPlan} title="Total MPE + Plan" />
           <Card amount={mpevsmpp} title="MPE vs MPP" />
         </div>
         <div className="grid grid-cols-5 gap-x-4">

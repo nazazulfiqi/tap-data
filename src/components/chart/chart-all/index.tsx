@@ -61,9 +61,22 @@ const options = {
 
 const ChartAll: React.FC = () => {
   const employeeData = useRecoilValue(EmployeeDataState);
-  const mppTotal = employeeData?.data?.filter[0]?.mpp_total;
-  const mpeTotal = employeeData?.data?.filter[0]?.mpe_total;
-  const mpePlusPlanTotal = employeeData?.data?.filter[0]?.mpe_plus_plan_total;
+  const location = employeeData?.data?.filter?.map((item) => {
+    return item?.location;
+  });
+  const mppTotal = employeeData?.data?.filter?.map((item) => {
+    return item?.mpp_total;
+  });
+  const mpeTotal = employeeData?.data?.filter?.map((item) => {
+    return item?.mpe_total;
+  });
+  const mpe_plus_plan_total = employeeData?.data?.filter?.map((item) => {
+    return item?.mpe_plus_plan_total;
+  });
+
+  // const mpeTotal = employeeData?.data?.filter[0]?.mpe_total;
+  // const mpePlusPlanTotal = employeeData?.data?.filter[0]?.mpe_plus_plan_total;
+
   // const mpevsmpp = employeeData?.data?.mpe_vs_mpp;
   // const fulfill = employeeData?.data?.fulfill;
   // const vacant = employeeData?.data?.vacant;
@@ -73,40 +86,26 @@ const ChartAll: React.FC = () => {
 
   console.log(employeeData);
 
-  const labels = [
-    "Januari",
-    "Februari",
-    "Maret",
-    "April",
-    "Mei",
-    "Juni",
-    "Juli",
-    "Agustus",
-    "September",
-    "Oktober",
-    "November",
-    "Desember",
-  ];
+  const labels = location;
 
   const data = {
     labels,
     datasets: [
       {
         label: "MPP",
-        data: [mppTotal],
-        backgroundColor: "#D97706",
+        data: mppTotal,
+        backgroundColor: "#189d5d",
       },
       {
         label: "MPE",
-        data: [mpeTotal],
-        backgroundColor: "#6756AE",
+        data: mpeTotal,
+        backgroundColor: "#e33f55",
       },
       {
-        label: "MPP + Plan",
-        data: [mpePlusPlanTotal],
-        backgroundColor: "#13837B",
+        label: "MPE + Plan",
+        data: mpe_plus_plan_total,
+        backgroundColor: "#f6b859",
       },
-      // employeeData?.data?.
     ],
   };
 
