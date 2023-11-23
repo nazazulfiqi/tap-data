@@ -7,7 +7,12 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import dataStatic from "./constant";
 import { ReusableTable } from "@/src/components/table";
 import {
@@ -71,18 +76,13 @@ export const TableSection: FC = () => {
   const [division, setDivision] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [position, setPosition] = useState<string>("");
-  const [statusPlanFulfillment, setStatusPlanFulfillment] = useState<string>("");
+  const [statusPlanFulfillment, setStatusPlanFulfillment] =
+    useState<string>("");
   const router = useRouter();
   const searchParams = useSearchParams();
   const allParams = searchParams.values();
   const searchQuery = searchParams.get("search") || "";
   const page = searchParams.get("page") || "1";
-
-  
-
-
-  
-  
 
   const [option, setOption] = useState({
     limit: 10,
@@ -246,9 +246,12 @@ export const TableSection: FC = () => {
   } = useGetStatusPlanFulfillment();
   const handleStatusPlanFilter = (selectedStatusPlanFulfillment: string) => {
     setStatusPlanFulfillment(selectedStatusPlanFulfillment);
-    setOption((prev) => ({ ...prev, page: 1, statusPlanFulfillment: selectedStatusPlanFulfillment }));
+    setOption((prev) => ({
+      ...prev,
+      page: 1,
+      statusPlanFulfillment: selectedStatusPlanFulfillment,
+    }));
   };
-
 
   return (
     <Fragment>
@@ -317,7 +320,7 @@ export const TableSection: FC = () => {
             <div className="flex space-x-4">
               <div className="w-full gap-y-2 flex flex-col">
                 <label htmlFor="" className="font-medium text-sm">
-                LOCATION DESCRIPTION
+                  LOCATION DESCRIPTION
                 </label>
                 <Dropdown
                   placeholder={"Location Description"}
@@ -332,7 +335,7 @@ export const TableSection: FC = () => {
               </div>
               <div className="w-full gap-y-2 flex flex-col">
                 <label htmlFor="" className="font-medium text-sm">
-                DIRECTORAT DESCRIPTION
+                  DIRECTORAT DESCRIPTION
                 </label>
                 <Dropdown
                   placeholder={"Directorat Description"}
@@ -347,7 +350,7 @@ export const TableSection: FC = () => {
               </div>
               <div className="w-full gap-y-2 flex flex-col">
                 <label htmlFor="" className="font-medium text-sm">
-                DIVISION DESCRIPTION
+                  DIVISION DESCRIPTION
                 </label>
                 <Dropdown
                   placeholder={"Division Description"}
@@ -362,9 +365,9 @@ export const TableSection: FC = () => {
               </div>
             </div>
             <div className="flex space-x-4">
-            <div className="w-full gap-y-2 flex flex-col">
+              <div className="w-full gap-y-2 flex flex-col">
                 <label htmlFor="" className="font-medium text-sm">
-                STATUS
+                  STATUS
                 </label>
                 <Dropdown
                   placeholder={"Status"}
@@ -379,7 +382,7 @@ export const TableSection: FC = () => {
               </div>
               <div className="w-full gap-y-2 flex flex-col">
                 <label htmlFor="" className="font-medium text-sm">
-                POSITION DESCRIPTION
+                  POSITION DESCRIPTION
                 </label>
                 <Dropdown
                   placeholder={"Position Description"}
@@ -394,7 +397,7 @@ export const TableSection: FC = () => {
               </div>
               <div className="w-full gap-y-2 flex flex-col">
                 <label htmlFor="" className="font-medium text-sm">
-                STATUS PLAN FULFILLMENT
+                  STATUS PLAN FULFILLMENT
                 </label>
                 <Dropdown
                   placeholder={"Status Plan Fulfillment"}
@@ -468,7 +471,7 @@ export const TableSection: FC = () => {
                 </td>
                 <td>
                   <div className="flex justify-center items-center py-2">
-                    {data.status_plan_fullfillment}
+                    {data.status_plan_fulfillment}
                   </div>
                 </td>
               </tr>

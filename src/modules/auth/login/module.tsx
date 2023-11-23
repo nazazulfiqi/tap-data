@@ -68,9 +68,9 @@ export const LoginModule: FC = () => {
       } else {
         setLoading(false);
         if (!loading) {
-          // toast.success("Login Success!", {
-          //   autoClose: 2000,
-          // });
+          toast.success("Login Success!", {
+            autoClose: 2000,
+          });
         }
         router.push("./dashboard");
       }
@@ -129,7 +129,18 @@ export const LoginModule: FC = () => {
                 </Button>
               </div>
             </form>
-            <ToastContainer />
+            <ToastContainer
+              position="top-center"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
           </div>
           <div className="box-right text-center relative w-1/2 h-full lg:block hidden">
             <Image

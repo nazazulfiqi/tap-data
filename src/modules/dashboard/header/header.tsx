@@ -9,14 +9,17 @@ const HeaderSection: FC = () => {
   // const {data,isLoading} = useGetTotalData()
 
   const employeeData = useRecoilValue(EmployeeDataState);
-  const mppTotal = employeeData?.data?.mpp_total;
-  const mpeTotal = employeeData?.data?.mpe_total;
-  const mpePlusPlanTotal = employeeData?.data?.mpe_plus_plan_total;
+  const mppTotal = employeeData?.data?.filter[0]?.mpp_total;
+  const mpeTotal = employeeData?.data?.filter[0]?.mpe_total;
+  const mpePlusPlanTotal = employeeData?.data?.filter[0]?.mpe_plus_plan_total;
+  const mpevsmpp = employeeData?.data?.mpe_vs_mpp;
   const fulfill = employeeData?.data?.fulfill;
   const vacant = employeeData?.data?.vacant;
   const closed = employeeData?.data?.closed;
   const overMpp = employeeData?.data?.over_mpp;
   const fptkOverMpp = employeeData?.data?.fptk_over_mpp;
+
+  console.log(employeeData);
 
   // if (isLoading) {
   //   return <LoadingSpinner/>
@@ -34,14 +37,14 @@ const HeaderSection: FC = () => {
           <Card amount={mppTotal} title="Total MPP" />
           <Card amount={mpeTotal} title="Total MPE" />
           <Card amount={mpePlusPlanTotal} title="Total MPE + Plan" />
-          <Card amount={mpePlusPlanTotal} title="TOTAL % MPE vs MPP" />
+          <Card amount={mpevsmpp} title="MPE vs MPP" />
         </div>
         <div className="grid grid-cols-5 gap-x-4">
           <Card amount={fulfill} title="FULFILL" />
           <Card amount={vacant} title="VACANT" />
           <Card amount={closed} title="CLOSED" />
           <Card amount={overMpp} title="OVER MPP" />
-          <Card amount={fptkOverMpp} title="FPTK OVER MPP" />
+          {/* <Card amount={fptkOverMpp} title="FPTK OVER MPP" /> */}
         </div>
       </div>
     </section>

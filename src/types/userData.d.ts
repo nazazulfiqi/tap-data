@@ -32,12 +32,18 @@ export type TEmployeeItem = {
   updatedAt: string;
 };
 
+export type TFilter = {
+  location: string,
+  mpp_total: number,
+  mpe_total:number,
+  mpe_plus_plan_total: number
+}
+
 export type TEmployeeResponse = TMetaResponse & {
   data: {
-    mpp_total: number,
-    mpe_total: number,
-    mpe_plus_plan_total: number,
+    filter: TFilter[],
     fulfill: number,
+    mpe_vs_mpp: number,
     vacant: number,
     closed: number,
     over_mpp: number,

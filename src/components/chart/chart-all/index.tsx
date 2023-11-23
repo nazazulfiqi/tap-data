@@ -51,21 +51,6 @@ const options = {
   },
 };
 
-const labels = [
-  "Januari",
-  "Februari",
-  "Maret",
-  "April",
-  "Mei",
-  "Juni",
-  "Juli",
-  "Agustus",
-  "September",
-  "Oktober",
-  "November",
-  "Desember",
-];
-
 // const getRandomData = () => {
 //   const data = [];
 //   for (let i = 0; i < labels.length; i++) {
@@ -76,14 +61,32 @@ const labels = [
 
 const ChartAll: React.FC = () => {
   const employeeData = useRecoilValue(EmployeeDataState);
-  const mppTotal = employeeData?.data?.mpp_total;
-  const mpeTotal = employeeData?.data?.mpe_total;
-  const mpePlusPlanTotal = employeeData?.data?.mpe_plus_plan_total;
-  const fulfill = employeeData?.data?.fulfill;
-  const vacant = employeeData?.data?.vacant;
-  const closed = employeeData?.data?.closed;
-  const overMpp = employeeData?.data?.over_mpp;
-  const fptkOverMpp = employeeData?.data?.fptk_over_mpp;
+  const mppTotal = employeeData?.data?.filter[0]?.mpp_total;
+  const mpeTotal = employeeData?.data?.filter[0]?.mpe_total;
+  const mpePlusPlanTotal = employeeData?.data?.filter[0]?.mpe_plus_plan_total;
+  // const mpevsmpp = employeeData?.data?.mpe_vs_mpp;
+  // const fulfill = employeeData?.data?.fulfill;
+  // const vacant = employeeData?.data?.vacant;
+  // const closed = employeeData?.data?.closed;
+  // const overMpp = employeeData?.data?.over_mpp;
+  // const fptkOverMpp = employeeData?.data?.fptk_over_mpp;
+
+  console.log(employeeData);
+
+  const labels = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
 
   const data = {
     labels,
@@ -103,31 +106,7 @@ const ChartAll: React.FC = () => {
         data: [mpePlusPlanTotal],
         backgroundColor: "#13837B",
       },
-      {
-        label: "Fulfill",
-        data: [fulfill],
-        backgroundColor: "#34D399",
-      },
-      {
-        label: "Vacant",
-        data: [vacant],
-        backgroundColor: "#FCD34D",
-      },
-      {
-        label: "Closed",
-        data: [closed],
-        backgroundColor: "#FCD34D",
-      },
-      {
-        label: "Over MPP",
-        data: [overMpp],
-        backgroundColor: "#FCD34D",
-      },
-      {
-        label: "FPTK Over MPP",
-        data: [fptkOverMpp],
-        backgroundColor: "#FCD34D",
-      },
+      // employeeData?.data?.
     ],
   };
 
