@@ -28,6 +28,8 @@ export type TEmployeeItem = {
   nama_karyawan_plan_fulfillment: string;
   mpe_plus_plan: string;
   status_plan_fullfillment: string;
+  plan_fullfilment:string
+  detail_plan_fulfillment:string
   createdAt: string;
   updatedAt: string;
 };

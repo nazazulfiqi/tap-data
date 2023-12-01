@@ -67,6 +67,8 @@ export const TableSection: FC = () => {
     { header: "NIK Plan" },
     { header: "Name Plan" },
     { header: "Status Plan" },
+    { header: "Plan Fulfillment" },
+    { header: "Detail Plan Fulfillment" },
   ];
 
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -544,6 +546,16 @@ export const TableSection: FC = () => {
                 <td>
                   <div className="flex justify-center items-center py-2">
                     {data.status_plan_fulfillment}
+                  </div>
+                </td>
+                <td>
+                  <div className="flex justify-center items-center py-2">
+                    {data.plan_fulfillment}
+                  </div>
+                </td>
+                <td>
+                  <div className="flex justify-center items-center py-2">
+                    {data.detail_plan_fulfillment}
                   </div>
                 </td>
               </tr>
