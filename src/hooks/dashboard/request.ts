@@ -1,4 +1,4 @@
-import { BUSINESS_UNIT, DATA_KARYAWAN, DATA_KARYAWAN_TOTAL, DIRECTORAT_DESCRIPTION, DIVISION_DESCRIPTION, GROUP, LOCATION_DESCRIPTION, POSITION_DESCRIPTION, REGIONAL, STATUS, STATUS_PLAN_FULFILLMENT } from "../../utils/constant/endpoints/dashboard";
+import { BUSINESS_UNIT, DATA_KARYAWAN, DATA_KARYAWAN_TOTAL, DETAIL_PLAN_FULFILLMENT, DIRECTORAT_DESCRIPTION, DIVISION_DESCRIPTION, GROUP, LOCATION_DESCRIPTION, PLAN_FULFILLMENT, POSITION_DESCRIPTION, REGIONAL, STATUS, STATUS_PLAN_FULFILLMENT } from "../../utils/constant/endpoints/dashboard";
 import { api } from "../../config/api/apiConfig";
 import { TEmployeeResponse } from "../../types/userData";
 import { TTotalDataResponse } from "@/src/types/mpp";
@@ -16,10 +16,12 @@ export const employeeGetRequest = async (
   division: string,
   status: string,
   position: string,
-  statusPlanFulfillment: string
+  statusPlanFulfillment: string,
+  planFulfillment: string,
+  detailPlanFulfillment: string
 ): Promise<TEmployeeResponse> => {
     const { data } = await api.get(
-      `${DATA_KARYAWAN}?business_unit_description=${businessUnit}&regional=${regional}&group=${group}&location_description=${location}&directorat_description=${directorat}&division_description=${division}&status=${status}&position_description=${position}&status_plan_fulfillment=${statusPlanFulfillment}&page=${page}&limit=${limit}&search=${search}`
+      `${DATA_KARYAWAN}?business_unit_description=${businessUnit}&regional=${regional}&group=${group}&location_description=${location}&directorat_description=${directorat}&division_description=${division}&status=${status}&position_description=${position}&status_plan_fulfillment=${statusPlanFulfillment}&plan_fulfillment=${planFulfillment}&detail_plan_fulfillment=${detailPlanFulfillment}&page=${page}&limit=${limit}&search=${search}`
     );
     // console.log(data);
     
@@ -92,6 +94,20 @@ export const positionDescriptionRequest = async (): Promise<TDropdownDashboardRe
 export const statusPlanFulfillmentRequest = async (): Promise<TDropdownDashboardResponse> => {
   const { data } = await api.get(
     `${STATUS_PLAN_FULFILLMENT}`
+  );
+  return data;
+}
+
+export const planFulfillmentRequest = async (): Promise<TDropdownDashboardResponse> => {
+  const { data } = await api.get(
+    `${PLAN_FULFILLMENT}`
+  );
+  return data;
+}
+
+export const detailPlanFulfillmentRequest = async (): Promise<TDropdownDashboardResponse> => {
+  const { data } = await api.get(
+    `${DETAIL_PLAN_FULFILLMENT}`
   );
   return data;
 }

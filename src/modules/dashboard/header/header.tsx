@@ -55,17 +55,17 @@ const HeaderSection: FC = () => {
       <h1 className="text-3xl font-bold text-center my-6">
         DASHBOARD MPP VS MPE TAP GROUP TAHUN 2023
       </h1>
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-4 ">
         <div className="grid grid-cols-4 gap-x-4">
           <Card amount={sumMpp} title="Total MPP" />
           <Card amount={sumMpe} title="Total MPE" />
           <Card amount={sumMpePlusPlan} title="Total MPE + Plan" />
           <Card amount={mpevsmpp} title="MPE vs MPP" />
         </div>
-        <div className="grid grid-cols-5 gap-x-4">
+        <div className="grid grid-cols-3 gap-x-4 ">
           <Card amount={fulfill} title="FULFILL" />
           <Card amount={vacant} title="VACANT" />
-          <Card amount={closed} title="CLOSED" />
+          {/* <Card amount={closed} title="CLOSED" /> */}
           <Card amount={overMpp} title="OVER MPP" />
           {/* <Card amount={fptkOverMpp} title="FPTK OVER MPP" /> */}
         </div>

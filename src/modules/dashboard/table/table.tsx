@@ -3,6 +3,7 @@ import React, {
   DependencyList,
   FC,
   Fragment,
+  MouseEvent,
   useCallback,
   useEffect,
   useState,
@@ -18,11 +19,13 @@ import { ReusableTable } from "@/src/components/table";
 import {
   useEmployeeData,
   useGetBusinessUnit,
+  useGetDetailPlanFulfillment,
   useGetDirectorat,
   useGetDivision,
   useGetEmployee,
   useGetGroup,
   useGetLocation,
+  useGetPlanFulfillment,
   useGetPosition,
   useGetRegional,
   useGetStatus,
@@ -78,6 +81,9 @@ export const TableSection: FC = () => {
   const [position, setPosition] = useState<string>("");
   const [statusPlanFulfillment, setStatusPlanFulfillment] =
     useState<string>("");
+  const [planFulfillment, setPlanFulfillment] = useState<string>("");
+  const [detailPlanFulfillment, setDetailPlanFulfillment] =
+    useState<string>("");
   const router = useRouter();
   const searchParams = useSearchParams();
   const allParams = searchParams.values();
@@ -111,7 +117,9 @@ export const TableSection: FC = () => {
     division,
     status,
     position,
-    statusPlanFulfillment
+    statusPlanFulfillment,
+    planFulfillment,
+    detailPlanFulfillment
   );
 
   const [deb, setDeb] = useState(searchQuery);
@@ -251,6 +259,43 @@ export const TableSection: FC = () => {
       page: 1,
       statusPlanFulfillment: selectedStatusPlanFulfillment,
     }));
+  };
+
+  const {
+    data: dataPlanFulfillment,
+    refetch: refetchPlanFulfillment,
+    isLoading: isLoadingPlanFulfillment,
+  } = useGetPlanFulfillment();
+  const handlePlanFullfillmentFilter = (selectedPlanFulfillment: string) => {
+    setPlanFulfillment(selectedPlanFulfillment);
+    setOption((prev) => ({
+      ...prev,
+      page: 1,
+      planFulfillment: selectedPlanFulfillment,
+    }));
+  };
+
+  console.log(dataPlanFulfillment);
+
+  const {
+    data: dataDetailPlanFulfillment,
+    refetch: refetchDetailPlanFulfillment,
+    isLoading: isLoadingDetailPlanFulfillment,
+  } = useGetDetailPlanFulfillment();
+  const handleDetailPlanFullfillmentFilter = (
+    selectedDetailPlanFulfillment: string
+  ) => {
+    setDetailPlanFulfillment(selectedDetailPlanFulfillment);
+    setOption((prev) => ({
+      ...prev,
+      page: 1,
+      detailPlanFulfillment: selectedDetailPlanFulfillment,
+    }));
+  };
+
+  const handleReload = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    window.location.reload();
   };
 
   return (
@@ -409,6 +454,38 @@ export const TableSection: FC = () => {
                   bold={false}
                   onChange={handleStatusPlanFilter}
                 />
+              </div>{" "}
+            </div>
+            <div className="flex space-x-4">
+              <div className="w-full gap-y-2 flex flex-col">
+                <label htmlFor="" className="font-medium text-sm">
+                  PLAN FULFILLMENT
+                </label>
+                <Dropdown
+                  placeholder={"Plan Fulfillment"}
+                  dataOptions={dataPlanFulfillment?.data || []}
+                  reverse={false}
+                  textCentre={false}
+                  icons={<IconArrowDown />}
+                  shadow={false}
+                  bold={false}
+                  onChange={handlePlanFullfillmentFilter}
+                />
+              </div>
+              <div className="w-full gap-y-2 flex flex-col">
+                <label htmlFor="" className="font-medium text-sm">
+                  DETAIL PLAN FULFILLMENT
+                </label>
+                <Dropdown
+                  placeholder={"Plan Fulfillment"}
+                  dataOptions={dataDetailPlanFulfillment?.data || []}
+                  reverse={false}
+                  textCentre={false}
+                  icons={<IconArrowDown />}
+                  shadow={false}
+                  bold={false}
+                  onChange={handleDetailPlanFullfillmentFilter}
+                />
               </div>
             </div>
           </div>
@@ -416,12 +493,7 @@ export const TableSection: FC = () => {
             <Button
               type="button"
               className="bg-[#D9D9D9] text-black px-6 border-2 border-black font-bold"
-            >
-              SEARCH
-            </Button>
-            <Button
-              type="button"
-              className="bg-[#D9D9D9] text-black px-6 border-2 border-black font-bold"
+              onClick={handleReload}
             >
               CLEAR
             </Button>

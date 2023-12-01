@@ -4,11 +4,13 @@ import { TEmployeeResponse, TuseEmployeeData } from "../../types/userData";
 import { useRecoilState } from "recoil";
 import {
   businessUnitRequest,
+  detailPlanFulfillmentRequest,
   directoratDescriptionRequest,
   divisionDescriptionRequest,
   employeeGetRequest,
   groupRequest,
   locationDescriptionRequest,
+  planFulfillmentRequest,
   positionDescriptionRequest,
   regionalRequest,
   statusPlanFulfillmentRequest,
@@ -30,12 +32,14 @@ export const useGetEmployee = (
   division: string,
   status: string,
   position: string,
-  statusPlanFulfillment: string
+  statusPlanFulfillment: string,
+  planFulfillmentRequest: string,
+  detailPlanFulfillmentRequest: string
 ): UseQueryResult<TEmployeeResponse> =>
   useQuery({
-    queryKey: ["employee-get", page, limit, search, businessUnit, regional, group, location, directorat, division, status, position, statusPlanFulfillment],
+    queryKey: ["employee-get", page, limit, search, businessUnit, regional, group, location, directorat, division, status, position, statusPlanFulfillment, planFulfillmentRequest, detailPlanFulfillmentRequest],
     queryFn: async () =>
-      await employeeGetRequest(page, limit, search, businessUnit, regional, group, location, directorat, division, status, position, statusPlanFulfillment),
+      await employeeGetRequest(page, limit, search, businessUnit, regional, group, location, directorat, division, status, position, statusPlanFulfillment, planFulfillmentRequest, detailPlanFulfillmentRequest),
   });
 
 export const useEmployeeData = (): TuseEmployeeData => {
@@ -105,4 +109,16 @@ export const useGetRegional = (): UseQueryResult<TDropdownDashboardResponse> =>
   useQuery({
     queryKey: ['status-plan-fulfillment'],
     queryFn: async () => await statusPlanFulfillmentRequest(),
+  }); 
+
+  export const useGetPlanFulfillment = (): UseQueryResult<TDropdownDashboardResponse> =>
+  useQuery({
+    queryKey: ['plan-fulfillment'],
+    queryFn: async () => await planFulfillmentRequest(),
+  }); 
+
+  export const useGetDetailPlanFulfillment = (): UseQueryResult<TDropdownDashboardResponse> =>
+  useQuery({
+    queryKey: ['detail-plan-fulfillment'],
+    queryFn: async () => await detailPlanFulfillmentRequest(),
   }); 
