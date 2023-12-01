@@ -74,13 +74,13 @@ export const UploadDragbleField = <T extends FieldValues>(
       ) : field.value === null || field.value === undefined ? (
         <div className="flex flex-col items-center w-full px-4 py-6 bg-[#F5F5F5] dark:bg-transparent rounded-lg cursor-pointer">
           <IconFile />
-          <span className="mt-2 text-xs md:text-sm lg:text-sm text-center text-black font-semibold dark:text-white">
+          <span className="mt-2 text-xs md:text-sm lg:text-sm text-center text-black font-semibold">
             Seret, taruh dan <span className="text-blue-base">pilih file</span>{" "}
             untuk mengunggah
           </span>
           <span className="flex justify-center items-center text-xs md:text-sm lg:text-sm mt-2 rounded-lg border overflow-hidden">
             <p className="bg-neutral-300 font-semibold p-3">Pilih File</p>
-            <p className="px-5">Belum memilih tugas</p>
+            <p className="px-5">Belum memilih data</p>
           </span>
           <input
             {...getInputProps(props)}
