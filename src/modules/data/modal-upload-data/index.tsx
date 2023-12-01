@@ -1,18 +1,30 @@
 import { Button } from "@/src/components/button/button";
 import { UploadDragbleField } from "@/src/components/input-dragable";
 import { useForm } from "react-hook-form";
-import { ToastContainer } from "react-toastify";
 import { FC, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRecoilState } from "recoil";
 import { modalUploadDataOpenState } from "@/src/recoil/atoms/data";
+import { usePostDataEmployee } from "@/src/hooks/data/hook";
+import { TAddDataEmployee } from "@/src/types/data";
+import { useQueryClient } from "@tanstack/react-query";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useSession } from "next-auth/react";
 
 export const ModalUploadData: FC = () => {
+  const { data: session } = useSession();
+
+  console.log(session);
+
+  const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useRecoilState(
     modalUploadDataOpenState
   );
+
+  const { mutate } = usePostDataEmployee();
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024;
   const ACCEPTED_MEDIA_TYPES = [
@@ -49,8 +61,32 @@ export const ModalUploadData: FC = () => {
     mode: "all",
   });
 
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+
+    const formData = new FormData();
+    formData.append("file", data.files);
+    console.log(data);
+
+    try {
+      mutate(formData as unknown as TAddDataEmployee, {
+        onSuccess: () => {
+          setIsModalOpen(false);
+          queryClient.invalidateQueries(["employee-get"]);
+          toast.success("Upload Data Success!", {
+            autoClose: 2000,
+          });
+        },
+      });
+      setIsModalOpen(true);
+    } catch (err) {
+      // setPrivateStatus(false);
+      console.log(err);
+    }
+  });
+
   return (
-    <form action="">
+    <form action="" onSubmit={onSubmit}>
       <div className="flex flex-col items-center justify-center pb-4 px-4  w-[500px]">
         <div className="w-full">
           <h1 className="font-bold text-xl">Upload Data</h1>
@@ -99,6 +135,18 @@ export const ModalUploadData: FC = () => {
           </Button>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </form>
   );
 };

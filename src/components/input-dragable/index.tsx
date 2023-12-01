@@ -33,6 +33,9 @@ export const UploadDragbleField = <T extends FieldValues>(
   ];
 
   const ACCEPTED_VIDEO_TYPES = ["video/ogg", "video/webm", "video/mp4"];
+  const ACCEPTED_MEDIA_TYPES = [
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  ];
 
   const handleRemoveFile = () => {
     setType("");
@@ -69,7 +72,8 @@ export const UploadDragbleField = <T extends FieldValues>(
         />
       ) : field.value !== null &&
         field.value !== undefined &&
-        type === "application/pdf" ? (
+        type ===
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ? (
         <span className="text-black break-all">{getName}</span>
       ) : field.value === null || field.value === undefined ? (
         <div className="flex flex-col items-center w-full px-4 py-6 bg-[#F5F5F5] dark:bg-transparent rounded-lg cursor-pointer">
