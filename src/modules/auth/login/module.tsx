@@ -16,7 +16,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/src/app/api/auth/[...nextauth]/option";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Toast } from "flowbite-react";
 import { LoadingSpinner } from "@/src/components/loading/spinner";
 
 type ValidationSchema = z.infer<typeof validationSchemaLogin>;

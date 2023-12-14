@@ -21,11 +21,16 @@ const api = axios.create(apiConfig);
 api.interceptors.request.use(
   async (config) => {
     const session: Session = (await getSession()) as Session;
-
+    
     const token = session?.user?.token?.access_token as string;
+
+    const tokenAuth = session?.user?.token 
+
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    }else if (tokenAuth) {
+      config.headers.Authorization = `Bearer ${tokenAuth}`;
     }
     return config;
   },
@@ -39,9 +44,9 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // if (error.response.status === 401 && !originalRequest._retry) {
-    //   // redirect to login page with signout
-    //   signOut({ callbackUrl: '/' });
+    if (error.response.status === 401 && !originalRequest._retry) {
+      // redirect to login page with signout
+      signOut({ callbackUrl: '/' });
 
     //   // window.location.href = '/auth/login';
 
@@ -62,8 +67,8 @@ api.interceptors.response.use(
     //   // originalRequest.headers['Authorization'] = `Bearer ${token}`;
 
     //   // return api(originalRequest);
-    // }
-    // return Promise.reject(error);
+    }
+    return Promise.reject(error);
   }
 );
 
