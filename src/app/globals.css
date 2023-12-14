@@ -30,3 +30,16 @@ html {
   display: flex;
   gap: 3px;
 }
+
+.link {
+  @apply p-2.5 flex rounded-md gap-6 items-center md:cursor-pointer cursor-default duration-300 font-medium;
+}
+
+.active {
+  @apply bg-gray-200 text-black;
+}
+
+input:focus {
+  outline: none; /* Menghilangkan border saat fokus */
+  /* Atur properti lain sesuai kebutuhan */
+}

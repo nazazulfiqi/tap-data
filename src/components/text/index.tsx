@@ -50,7 +50,7 @@ export const TextField = <T extends FieldValues>({
   type = 'text',
   status = 'none',
   isTextArea = false,
-  textAreaRow = 12,
+  textAreaRow = 12, 
   ...props
 }: TTextFieldProps<T>): ReactElement => {
   const [showPassword, setShowPassword] = useState(false);

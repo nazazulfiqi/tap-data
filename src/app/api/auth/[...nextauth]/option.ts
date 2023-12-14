@@ -63,30 +63,30 @@ export const authOptions: NextAuthOptions = {
         token.access_token = account.access_token;
         token.refresh_token = account.refresh_token;
       } else if (account?.provider === 'login' && currentUser) {
-        console.log('cruser', currentUser);
-        console.log(user, account);
+        // console.log('cruser', currentUser);
+        // console.log(user, account);
 
         token.access_token = currentUser.data.access_token;
         currentUser.name = user.name;
         currentUser.email = user.email;
+          token.user_id = currentUser.data.user_id;
+          // console.log(token.user_id);
+          
       }
 
+      // console.log(currentUser);
       return { ...token, ...currentUser };
+      
     },
     async session({ session, token }) {
-      const jwt_token = {
-        access_token: token?.access_token,
-
-      };
       session = {
         expires: token?.expires as string,
         user: {
-          id: 'w',
-          name: token.name,
-          email: token.email,
-          token: jwt_token,
+          id: "w",
+          token: token.access_token as any,
         },
       };
+      // console.log(session);
       return session;
     },
   },

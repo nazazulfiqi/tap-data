@@ -21,11 +21,16 @@ const api = axios.create(apiConfig);
 api.interceptors.request.use(
   async (config) => {
     const session: Session = (await getSession()) as Session;
-
+    
     const token = session?.user?.token?.access_token as string;
+
+    const tokenAuth = session?.user?.token 
+
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    }else if (tokenAuth) {
+      config.headers.Authorization = `Bearer ${tokenAuth}`;
     }
     return config;
   },
@@ -41,27 +46,27 @@ api.interceptors.response.use(
 
     if (error.response.status === 401 && !originalRequest._retry) {
       // redirect to login page with signout
-      signOut({ callbackUrl: '/auth/login' });
+      signOut({ callbackUrl: '/' });
 
-      // window.location.href = '/auth/login';
+    //   // window.location.href = '/auth/login';
 
-      // originalRequest._retry = true;
+    //   // originalRequest._retry = true;
 
-      // const session: Session = (await getSession()) as Session;
+    //   // const session: Session = (await getSession()) as Session;
 
-      // const refreshToken = session?.user?.token?.refresh_token as string;
+    //   // const refreshToken = session?.user?.token?.refresh_token as string;
 
-      // const { data } = await refreshTokenRequest({
-      //   refresh_token: refreshToken,
-      // });
+    //   // const { data } = await refreshTokenRequest({
+    //   //   refresh_token: refreshToken,
+    //   // });
 
-      // const token = data?.access_token as string;
+    //   // const token = data?.access_token as string;
 
-      // api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    //   // api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      // originalRequest.headers['Authorization'] = `Bearer ${token}`;
+    //   // originalRequest.headers['Authorization'] = `Bearer ${token}`;
 
-      // return api(originalRequest);
+    //   // return api(originalRequest);
     }
     return Promise.reject(error);
   }

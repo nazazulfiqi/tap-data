@@ -1,4 +1,4 @@
-import { TLoginPayload, TLoginResponse } from "@/types/authentications";
+import { TLoginPayload, TLoginResponse } from "../../types/authentications";
 import { TMetaErrorResponse } from "../../utils/constant/types";
 import { UseMutationResult, useMutation } from "@tanstack/react-query";
 import { loginRequest } from "./request";
