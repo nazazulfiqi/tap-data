@@ -96,12 +96,12 @@ export const LoginModule: FC = () => {
             </p>
             <form action="" onSubmit={onSubmit}>
               <TextField
-                type="email"
+                type="text"
                 variant="lg"
                 control={control}
                 name={"email"}
-                placeholder="Masukkan Email"
-                label="Email"
+                placeholder="Masukkan Username"
+                label="Username"
                 status={errors.email ? "error" : "none"}
                 message={errors.email?.message}
                 required

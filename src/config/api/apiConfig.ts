@@ -22,17 +22,21 @@ api.interceptors.request.use(
   async (config) => {
     const session: Session = (await getSession()) as Session;
     
-    const token = session?.user?.token?.access_token as string;
+    // const token = session?.user?.token?.access_token as string;
 
     const tokenAuth = session?.user?.token 
 
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }else if (tokenAuth) {
+    // if (token) {
+    //   config.headers.Authorization = `Bearer ${token}`;
+    // }else if (tokenAuth) {
+    //   config.headers.Authorization = `Bearer ${tokenAuth}`;
+    // }
+    if (tokenAuth) {
       config.headers.Authorization = `Bearer ${tokenAuth}`;
     }
     return config;
+
   },
   (error) => Promise.reject(error)
 );
