@@ -3,9 +3,18 @@
 import Image from "next/image";
 import { FC } from "react";
 import Card from "../card/card";
-import { descriptionData } from "../constant";
+import { useGetDescriptions } from "@/src/hooks/description/hook";
+import { LoadingSpinner } from "@/src/components/loading/spinner";
 
 export const DescriptionContent: FC = () => {
+  const { data, isLoading } = useGetDescriptions();
+
+  const descriptionsData = data?.data;
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <main>
       <section className="w-full flex flex-col gap-4">
@@ -19,11 +28,11 @@ export const DescriptionContent: FC = () => {
           />
         </div>
         <div className="grid grid-cols-3 gap-4">
-          {descriptionData.map((item, index) => (
+          {descriptionsData?.map((item) => (
             <Card
-              key={index}
-              title={item.title}
-              description={item.description}
+              key={item?.id}
+              title={item?.title}
+              description={item?.content}
             />
           ))}
         </div>
