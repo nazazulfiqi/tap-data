@@ -37,3 +37,20 @@ export const getDescriptionsRequest = async (): Promise<TDescriptionsResponse> =
     })
     return data;
   };
+
+  export const putEditDescription = async (
+    id: number,
+    payload: TCreateDescriptions,
+  ): Promise<TSingleDescriptionsResponse> => {
+    
+    const { data } = await api({
+      method: "put",
+      url: `${DESCRIPTIONS}/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        
+      },
+      data: payload,
+    })
+    return data;
+  };

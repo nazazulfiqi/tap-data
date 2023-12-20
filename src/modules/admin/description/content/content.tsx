@@ -8,9 +8,11 @@ import { useRecoilState } from "recoil";
 import {
   modalCreateDescriptionOpenState,
   modalDeleteDescriptionOpenState,
+  modalEditDescriptionOpenState,
 } from "@/src/recoil/atoms/descriptions";
 import { Modal } from "@/src/components/modal";
 import { DeleteDescriptionModal } from "../modal-delete-desc";
+import { EditDescriptionModal } from "../modal-edit-desc";
 
 export const AdminDescriptionContent: FC = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
@@ -19,6 +21,12 @@ export const AdminDescriptionContent: FC = () => {
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useRecoilState(
     modalDeleteDescriptionOpenState
   );
+
+  const [isModalEditOpen, setIsModalEditOpen] = useRecoilState(
+    modalEditDescriptionOpenState
+  );
+
+  const [descriptionDataState, setDescriptionDataState] = useState<any>({});
 
   const [descriptionId, setDescriptionId] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -102,6 +110,10 @@ export const AdminDescriptionContent: FC = () => {
                           <Button
                             type="button"
                             className="px-4 bg-blue-500 rounded-sm py-1 text-white hover:bg-blue-600"
+                            onClick={() => {
+                              setIsModalEditOpen(true);
+                              setDescriptionDataState(data);
+                            }}
                           >
                             Edit
                           </Button>
@@ -133,6 +145,13 @@ export const AdminDescriptionContent: FC = () => {
         onClose={() => setIsModalOpen(false)}
       >
         <CreateDescriptionModal />
+      </Modal>
+      <Modal
+        lookup={isModalEditOpen}
+        withClose={true}
+        onClose={() => setIsModalEditOpen(false)}
+      >
+        <EditDescriptionModal descData={descriptionDataState} />
       </Modal>
       <Modal
         lookup={isModalDeleteOpen}
