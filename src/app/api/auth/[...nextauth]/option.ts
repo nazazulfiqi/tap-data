@@ -66,11 +66,14 @@ export const authOptions: NextAuthOptions = {
         // console.log('cruser', currentUser);
         // console.log(user, account);
 
+        
         token.access_token = currentUser.data.access_token;
         currentUser.name = user.name;
         currentUser.email = user.email;
+        
           token.user_id = currentUser.data.user_id;
-          // console.log(token.user_id);
+          token.role_id = currentUser.data.role_id;
+          // console.log(token.role_id);
           
       }
 
@@ -83,6 +86,7 @@ export const authOptions: NextAuthOptions = {
         expires: token?.expires as string,
         user: {
           id: "w",
+          role_id: Number(token?.role_id),
           token: token.access_token as any,
         },
       };

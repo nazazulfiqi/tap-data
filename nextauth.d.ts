@@ -6,7 +6,9 @@ type Token = {
 };
 
 interface IUser extends DefaultUser {
+  role_id?: number;
   token?: Token;
+
 }
 declare module 'next-auth' {
   type User = IUser;

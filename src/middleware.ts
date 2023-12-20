@@ -7,6 +7,8 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token, req }) => {
+        console.log("dari middleware", token);
+        
         return !!token;
       },
     },

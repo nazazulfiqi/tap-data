@@ -10,13 +10,18 @@ import { MdMenu, MdOutlineDescription } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
 import Image from "next/image";
 import { SubMenu } from "../sidebar/submenu";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Button } from "../button/button";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import { BsClipboardData } from "react-icons/bs";
 
 export const SidebarComponent: FC = (): ReactElement => {
+  const { data: session } = useSession();
+  const roleId = session?.user?.role_id;
+
+  console.log(roleId);
+
   let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isTabletMid ? false : true);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
@@ -146,26 +151,33 @@ export const SidebarComponent: FC = (): ReactElement => {
                 Description
               </Link>
             </li>
-            <li className="mb-4">
-              <Link
-                href={"/admin/description"}
-                className={`${
-                  pathname == "/admin/description" ? "link active" : "link"
-                } `}
-              >
-                <MdOutlineDescription size={23} className="min-w-max" />
-                Description Settings
-              </Link>
-            </li>
-            <li className="mb-4">
-              <Link
-                href={"/data"}
-                className={`${pathname == "/data" ? "link active" : "link"} `}
-              >
-                <BsClipboardData size={23} className="min-w-max" />
-                Data
-              </Link>
-            </li>
+            {roleId == 1 && (
+              <>
+                <li className="mb-4">
+                  <Link
+                    href={"/admin/description"}
+                    className={`${
+                      pathname == "/admin/description" ? "link active" : "link"
+                    } `}
+                  >
+                    <MdOutlineDescription size={23} className="min-w-max" />
+                    Description Settings
+                  </Link>
+                </li>
+                <li className="mb-4">
+                  <Link
+                    href={"/data"}
+                    className={`${
+                      pathname == "/data" ? "link active" : "link"
+                    } `}
+                  >
+                    <BsClipboardData size={23} className="min-w-max" />
+                    Data
+                  </Link>
+                </li>
+              </>
+            )}
+
             {/* {(open || isTabletMid) && (
               <div className="border-y py-5 border-slate-300 ">
                 <small className="pl-3 text-slate-500 inline-block mb-2">
@@ -178,12 +190,12 @@ export const SidebarComponent: FC = (): ReactElement => {
                 ))}
               </div>
             )} */}
-            <li>
+            {/* <li>
               <Link href={"/settings"} className="link">
                 <SlSettings size={23} className="min-w-max" />
                 Settings
               </Link>
-            </li>
+            </li> */}
             <li>
               <Button type="button" onClick={handleLogout} className="link">
                 <AiOutlineLogout size={23} className="min-w-max" />
