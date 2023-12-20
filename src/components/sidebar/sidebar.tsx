@@ -148,6 +148,17 @@ export const SidebarComponent: FC = (): ReactElement => {
             </li>
             <li className="mb-4">
               <Link
+                href={"/admin/description"}
+                className={`${
+                  pathname == "/admin/description" ? "link active" : "link"
+                } `}
+              >
+                <MdOutlineDescription size={23} className="min-w-max" />
+                Description Settings
+              </Link>
+            </li>
+            <li className="mb-4">
+              <Link
                 href={"/data"}
                 className={`${pathname == "/data" ? "link active" : "link"} `}
               >
