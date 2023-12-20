@@ -60,7 +60,6 @@ export const DataContent: FC = () => {
   };
 
   const columns = [
-    { header: "Position Description", className: "w-[200px]" },
     {
       header: "NIK",
       hasSorting: true,
@@ -68,23 +67,35 @@ export const DataContent: FC = () => {
       sort_by: "nik",
     },
     { header: "Name", hasSorting: true, sort_by: "name" },
+    { header: "Hire Date" },
+    { header: "Length of Service" },
+    { header: "Position Description", className: "w-[200px]" },
+    { header: "Start Position" },
+    { header: "Length of Position" },
+    { header: "Mgr Level Description" },
+    { header: "MPP" },
+    { header: "MPE" },
+    { header: "% MPE vs MPP" },
     { header: "Status  ", hasSorting: true, sort_by: "created_at" },
-    { header: "NIK Plan" },
-    { header: "Name Plan" },
-    { header: "Status Plan" },
+    { header: "GROUP" },
+    { header: "Department Description" },
+    { header: "Division Descr" },
+    { header: "Directorat Description" },
+    { header: "Location Description" },
+    { header: "Regional" },
+    { header: "Business Unit Description" },
     { header: "Plan Fulfillment" },
     { header: "Detail Plan Fulfillment" },
-    { header: "Detail Plan Fulfillment" },
-    { header: "Detail Plan Fulfillment" },
-    { header: "Detail Plan Fulfillment" },
-    { header: "Detail Plan Fulfillment" },
-    { header: "Detail Plan Fulfillment" },
-    { header: "Detail Plan Fulfillment" },
-    {
-      header: "Action",
-      className: "text-center position-fixed",
-      render: renderActions,
-    },
+    { header: "NIK Plan" },
+    { header: "Name Plan" },
+    { header: "MPE + Plan" },
+    { header: "Status Plan" },
+
+    // {
+    //   header: "Action",
+    //   className: "text-center position-fixed",
+    //   render: renderActions,
+    // },
   ];
 
   const handleEdit = (data: any) => {
@@ -197,16 +208,11 @@ export const DataContent: FC = () => {
             columns={columns}
             MainTableSort={handleSort}
           >
-            {listEmployeeData?.data?.employees?.map((data: any, index: any) => {
+            {listEmployeeData?.data?.employees?.map((data, index) => {
               return (
                 <>
                   <tr key={index} className="border-b">
                     <td className="text-center">
-                      <div className="flex justify-center items-center py-2">
-                        {data.position_description}
-                      </div>
-                    </td>
-                    <td>
                       <div className="flex justify-center items-center py-2">
                         {data.nik}
                       </div>
@@ -218,7 +224,97 @@ export const DataContent: FC = () => {
                     </td>
                     <td>
                       <div className="flex justify-center items-center py-2">
+                        {data.hire_date}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.length_of_service}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.position_description}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.start_position}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.length_of_position}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.mgr_level_description}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.mpp}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.mpe}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.mpe_vs_mpp}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
                         {data.status}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.group}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.departmen_description}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.division_description}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.directorat_description}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.location_description}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.regional}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.business_unit_description}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.plan_fullfilment}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.detail_plan_fulfillment}
                       </div>
                     </td>
                     <td>
@@ -233,20 +329,15 @@ export const DataContent: FC = () => {
                     </td>
                     <td>
                       <div className="flex justify-center items-center py-2">
-                        {data.status_plan_fulfillment}
+                        {data.mpe_plus_plan}
                       </div>
                     </td>
                     <td>
                       <div className="flex justify-center items-center py-2">
-                        {data.plan_fulfillment}
+                        {data.status_plan_fullfillment}
                       </div>
                     </td>
-                    <td>
-                      <div className="flex justify-center items-center py-2">
-                        {data.detail_plan_fulfillment}
-                      </div>
-                    </td>
-                    <td>
+                    {/* <td>
                       <div className="flex justify-center items-center py-2 gap-2">
                         <Button
                           type="button"
@@ -261,7 +352,7 @@ export const DataContent: FC = () => {
                           Hapus
                         </Button>
                       </div>
-                    </td>
+                    </td> */}
                   </tr>
                 </>
               );

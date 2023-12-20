@@ -18,6 +18,12 @@ export type TDescriptions = {
     id: string
   }
 
+  export type TEditDescriptions = {
+    title?: string
+    content?: string
+  }
+
+
 
 export type TDescriptionsResponse = TMetaResponse<TDescriptions>
 export type TSingleDescriptionsResponse = TMetaResponseSingle<TDescriptions>
