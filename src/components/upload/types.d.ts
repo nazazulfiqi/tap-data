@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEventHandler } from 'react';
 import { FieldValues, UseControllerProps } from 'react-hook-form';
 

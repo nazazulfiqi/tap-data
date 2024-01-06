@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { RiBuilding3Line } from "react-icons/ri";
+import { RiBuilding3Line, RiUser2Fill } from "react-icons/ri";
 import { FC, ReactElement, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
@@ -173,6 +173,17 @@ export const SidebarComponent: FC = (): ReactElement => {
                   >
                     <BsClipboardData size={23} className="min-w-max" />
                     Data
+                  </Link>
+                </li>
+                <li className="mb-4">
+                  <Link
+                    href={"/admin/users"}
+                    className={`${
+                      pathname == "/admin/users" ? "link active" : "link"
+                    } `}
+                  >
+                    <RiUser2Fill size={23} className="min-w-max" />
+                    Users
                   </Link>
                 </li>
               </>
