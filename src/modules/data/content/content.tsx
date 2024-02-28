@@ -3,7 +3,10 @@
 import { Button } from "@/src/components/button/button";
 import { UploadDragbleField } from "@/src/components/input-dragable";
 import { Modal } from "@/src/components/modal";
-import { modalUploadDataOpenState } from "@/src/recoil/atoms/data";
+import {
+  modalDeleteDataState,
+  modalUploadDataOpenState,
+} from "@/src/recoil/atoms/data";
 import { DependencyList, FC, useCallback, useEffect, useState } from "react";
 import Pagination from "@/src/components/pagination";
 
@@ -13,6 +16,7 @@ import { ModalUploadData } from "../modal-upload-data";
 import { ReusableTable } from "@/src/components/table";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEmployeeData, useGetEmployee } from "@/src/hooks/dashboard/hook";
+import { DeleteDataModal } from "../modal-delete-data";
 
 export function useDebounce(
   effect: VoidFunction,
@@ -31,6 +35,9 @@ export const DataContent: FC = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
     modalUploadDataOpenState
   );
+
+  const [modalDeleteOpen, setModalDeleteOpen] =
+    useRecoilState(modalDeleteDataState);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [sortColumn, setSortColumn] = useState<string>("_id");
   const [businessUnit, setBusinessUnit] = useState<string>("");
@@ -199,6 +206,17 @@ export const DataContent: FC = () => {
             }}
           >
             INSERT
+          </Button>
+        </div>
+        <div className="flex justify-end">
+          <Button
+            type="button"
+            className="px-4 py-1 border-2 text-white border-black rounded-md font-semibold bg-red-500"
+            onClick={() => {
+              setModalDeleteOpen(true);
+            }}
+          >
+            DELETE
           </Button>
         </div>
         <div className="w-full mt-8 overflow-auto border-2 border-black flex scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg">
@@ -373,6 +391,13 @@ export const DataContent: FC = () => {
         onClose={() => setIsModalOpen(false)}
       >
         <ModalUploadData />
+      </Modal>
+      <Modal
+        lookup={modalDeleteOpen}
+        withClose={true}
+        onClose={() => setModalDeleteOpen(false)}
+      >
+        <DeleteDataModal />
       </Modal>
     </main>
   );

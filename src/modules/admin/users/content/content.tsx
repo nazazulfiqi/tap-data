@@ -4,7 +4,7 @@ import { usePostCreateUser } from "@/src/hooks/authentications/hook";
 import { TCreateUserPayload } from "@/src/types/admin/users";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import { z } from "zod";
@@ -34,8 +34,6 @@ export const AdminUsersContent: FC = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-
     const formData = new FormData();
     formData.append("full_name", data.full_name);
     formData.append("email", data.email);
@@ -48,7 +46,6 @@ export const AdminUsersContent: FC = () => {
         toast.success("Create Users Success!", {
           autoClose: 2000,
         });
-        reset();
       },
       onError: (error) => {
         console.error(error);
@@ -59,6 +56,10 @@ export const AdminUsersContent: FC = () => {
       },
     });
   });
+
+  useEffect(() => {
+    reset();
+  }, []);
 
   return (
     <main>

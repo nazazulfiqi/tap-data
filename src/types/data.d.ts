@@ -30,5 +30,9 @@ export type TAddDataEmployee = {
     file: File;
   };
 
+  export type TDeleteDataEmployeePayload = {
+    date: string
+  }
+
   export type TDataEmployeeDetailResponse = TMetaResponseSingle<TDataEmployee>;
   
