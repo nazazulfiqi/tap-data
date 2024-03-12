@@ -8,12 +8,12 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 export const AdminDescriptionModule: FC = () => {
-  const { data: session } = useSession();
-  const roleId = session?.user?.role_id;
+  // const { data: session } = useSession();
+  // const roleId = session?.user?.role_id;
 
-  if (roleId !== 1) {
-    redirect("/dashboard");
-  }
+  // if (roleId !== 1) {
+  //   redirect("/dashboard");
+  // }
   return (
     <BaseLayout>
       <AdminDescriptionContent />

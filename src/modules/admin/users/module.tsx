@@ -7,12 +7,6 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 const AdminUsersModule = () => {
-  const { data: session } = useSession();
-  const roleId = session?.user?.role_id;
-
-  if (roleId !== 1) {
-    redirect("/dashboard");
-  }
   return (
     <BaseLayout>
       <AdminUsersContent />

@@ -38,8 +38,6 @@ export const CreateDescriptionModal: FC = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("content", data.content);

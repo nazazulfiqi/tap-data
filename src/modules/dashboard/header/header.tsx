@@ -42,8 +42,6 @@ const HeaderSection: FC = () => {
   const overMpp = employeeData?.data?.over_mpp;
   const fptkOverMpp = employeeData?.data?.fptk_over_mpp;
 
-  console.log(employeeData);
-
   // if (isLoading) {
   //   return <LoadingSpinner/>
   // }

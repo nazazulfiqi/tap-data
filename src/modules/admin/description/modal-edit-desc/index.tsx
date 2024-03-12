@@ -33,8 +33,6 @@ export const EditDescriptionModal: FC<EditDescriptionModalProps> = ({
     modalEditDescriptionOpenState
   );
 
-  console.log(descData);
-
   const queryClient = useQueryClient();
   const { mutate } = usePutEditDescription(descData.id);
 
@@ -60,8 +58,6 @@ export const EditDescriptionModal: FC<EditDescriptionModalProps> = ({
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("content", data.content);

@@ -277,8 +277,6 @@ export const TableSection: FC = () => {
     }));
   };
 
-  console.log(dataPlanFulfillment);
-
   const {
     data: dataDetailPlanFulfillment,
     refetch: refetchDetailPlanFulfillment,

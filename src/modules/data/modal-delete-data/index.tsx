@@ -50,8 +50,6 @@ export const DeleteDataModal: FC = ({}) => {
   const onSubmit = handleSubmit((data) => {
     const date = `${data.year}-${data.month}`;
 
-    console.log(date);
-
     // const formData = new FormData();
     // formData.append("title", data.title);
     // formData.append("content", data.content);
