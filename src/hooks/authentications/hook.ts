@@ -1,8 +1,8 @@
 import { TLoginPayload, TLoginResponse } from "../../types/authentications";
 import { TMetaErrorResponse } from "../../utils/constant/types";
-import { UseMutationResult, useMutation } from "@tanstack/react-query";
-import { loginRequest, postCreateUser } from "./request";
-import { TCreateUserPayload, TCreateUserResponse } from "@/src/types/admin/users";
+import { UseMutationResult, UseQueryResult, useMutation, useQuery } from "@tanstack/react-query";
+import { deleteUserRequest, loginRequest, postCreateUser, usersGetRequest } from "./request";
+import { TCreateUserPayload, TCreateUserResponse, TGetUsersResponse } from "@/src/types/admin/users";
 
 export const useLogin = (): UseMutationResult<
   TLoginResponse,
@@ -26,4 +26,23 @@ return useMutation({
   mutationKey: ['post-create-user'],
   mutationFn: async (payload) => await postCreateUser(payload),
 });
+};
+
+export const useGetUsers = (
+  page: number,
+  limit: number,
+  search: string
+): UseQueryResult<
+TGetUsersResponse
+> => useQuery({
+  queryKey: ['get-users', page, limit, search],
+  queryFn: async () => await usersGetRequest(page, limit, search),
+});
+
+export const useDeleteUser = (): any => {
+  return useMutation({
+    mutationKey: ['delete-user'],
+    mutationFn: async (id: string) =>
+      await deleteUserRequest(id),
+  });
 };

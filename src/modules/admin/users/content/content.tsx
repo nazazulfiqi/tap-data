@@ -1,139 +1,192 @@
+"use client";
+
 import { Button } from "@/src/components/button/button";
-import { TextField } from "@/src/components/text";
-import { usePostCreateUser } from "@/src/hooks/authentications/hook";
-import { TCreateUserPayload } from "@/src/types/admin/users";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
-import { FC, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
-import { z } from "zod";
-import "react-toastify/dist/ReactToastify.css";
 
-export const AdminUsersContent: FC = () => {
-  const queryClient = useQueryClient();
-  const { mutate } = usePostCreateUser();
+import { DependencyList, FC, useCallback, useEffect, useState } from "react";
 
-  const validationCreateUser = z.object({
-    full_name: z.string().min(1, { message: "Required" }),
-    email: z.string().min(1, { message: "Required" }),
-    username: z.string().min(1, { message: "Required" }),
-    password: z.string().min(1, { message: "Required" }),
-  });
+import { ReusableTable } from "@/src/components/table";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useGetUsers } from "@/src/hooks/authentications/hook";
+import Pagination from "@/src/components/pagination";
+import TextFieldNormal from "@/src/components/textfield";
+import { Modal } from "@/src/components/modal";
+import { modalDeleteDataState } from "@/src/recoil/atoms/data";
+import { useRecoilState } from "recoil";
+import { DeleteDataModalUser } from "../modal-delete-user";
 
-  type TValidationSchema = z.infer<typeof validationCreateUser>;
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<TValidationSchema>({
-    resolver: zodResolver(validationCreateUser),
-    mode: "all",
-  });
-
-  const onSubmit = handleSubmit((data) => {
-    const formData = new FormData();
-    formData.append("full_name", data.full_name);
-    formData.append("email", data.email);
-    formData.append("username", data.username);
-    formData.append("password", data.password);
-    formData.append("confirm_password", data.password);
-
-    mutate(formData as unknown as TCreateUserPayload, {
-      onSuccess: () => {
-        toast.success("Create Users Success!", {
-          autoClose: 2000,
-        });
-      },
-      onError: (error) => {
-        console.error(error);
-
-        toast.error("Create Users Failed!", {
-          autoClose: 2000,
-        });
-      },
-    });
-  });
+export function useDebounce(
+  effect: VoidFunction,
+  dependencies: DependencyList,
+  delay: number
+): void {
+  const callback = useCallback(effect, dependencies);
 
   useEffect(() => {
-    reset();
-  }, []);
+    const timeout = setTimeout(callback, delay);
+    return () => clearTimeout(timeout);
+  }, [callback, delay]);
+}
+
+export const UsersAdminContent: FC = () => {
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortColumn, setSortColumn] = useState<string>("_id");
+  const [fullname, setFullname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [id, setId] = useState<string>("");
+
+  const [modalDeleteOpen, setModalDeleteOpen] =
+    useRecoilState(modalDeleteDataState);
+
+  const columns = [
+    { header: "Fullname", hasSorting: true, sort_by: "fullname" },
+    { header: "Email" },
+    { header: "Username" },
+    { header: "Action" },
+  ];
+
+  const handleSort = (header: string) => {
+    if (sortColumn === header) {
+      // If the same column is clicked, toggle the sorting order
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      // If a different column is clicked, set it as the new sorting column and default to ascending order
+      setSortColumn(header);
+      setSortOrder("asc");
+    }
+  };
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const allParams = searchParams.values();
+  const searchQuery = searchParams.get("search") || "";
+  const page = searchParams.get("page") || "1";
+
+  const [option, setOption] = useState({
+    limit: 10,
+    page: parseInt(page),
+    search: "",
+  });
+
+  const { data, refetch, isLoading } = useGetUsers(
+    option.page,
+    option.limit,
+    searchQuery
+  );
+
+  const [deb, setDeb] = useState(searchQuery);
+
+  const listUsersData = data;
+  useEffect(() => {
+    setOption(option);
+  }, [option]);
+
+  //   console.log(data);
+  console.log(listUsersData);
+
+  useDebounce(
+    () => {
+      setOption((prev) => ({ ...prev, search: deb }));
+      router.push(`/admin/users?page=1&search=${deb}`);
+    },
+    [deb],
+    700
+  );
+
+  const handlePageChange = async (page: number) => {
+    setOption((prev) => ({ ...prev, page: page }));
+    router.push(`/admin/users?page=${page}&search=${deb}`);
+  };
 
   return (
     <main>
       <section className="w-full flex flex-col gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-center my-4">CREATE USER</h1>
+          <h1 className="text-2xl font-bold text-center my-4">Users</h1>
         </div>
-        <div className="w-full flex justify-center">
-          <div className="w-[500px] border rounded-md p-4 bg-cream-base">
-            <form action="" onSubmit={onSubmit}>
-              <div className="w-full pb-3 flex flex-col gap-y-1">
-                <TextField
-                  label="Full Name"
-                  name="full_name"
-                  placeholder={"Full Name"}
-                  required
-                  variant="md"
-                  control={control}
-                  status={errors.full_name ? "error" : "none"}
-                  message={errors.full_name?.message}
-                />
-                <TextField
-                  label="Email"
-                  name="email"
-                  placeholder={"Email"}
-                  required
-                  variant="md"
-                  control={control}
-                  status={errors.email ? "error" : "none"}
-                  message={errors.email?.message}
-                />
-                <TextField
-                  label="Username"
-                  name="username"
-                  placeholder={"Username"}
-                  required
-                  variant="md"
-                  control={control}
-                  status={errors.username ? "error" : "none"}
-                  message={errors.username?.message}
-                />
-                <TextField
-                  type="password"
-                  label="Password"
-                  name="password"
-                  placeholder={"Password"}
-                  required
-                  variant="md"
-                  control={control}
-                  status={errors.password ? "error" : "none"}
-                  message={errors.password?.message}
-                />
-              </div>
-              <Button
-                type="submit"
-                className="py-2.5 px-24  w-full text-sm font-bold transition-colors ease-in-out relative z-10 rounded-md duration-300  flex items-center justify-center gap-2 bg-cream-base text-black hover:border-version2-30 border-2 border-black "
-              >
-                Tambah
-              </Button>
-            </form>
-          </div>
+        <div className="flex justify-end">
+          <Link
+            href={"/admin/users/create"}
+            className="px-4 py-1 border-2 border-black rounded-md font-semibold bg-[#22AFFF]"
+          >
+            CREATE
+          </Link>
         </div>
-        <ToastContainer
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+        <div className="w-full">
+          <TextFieldNormal
+            name="SEARCH"
+            prop="block"
+            desc="Note: The user can search on Full Name"
+            widthInput="w-full"
+            value={deb}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setDeb(e.target.value)
+            }
+          />
+        </div>
+
+        <div className="w-full mt-8 overflow-auto border-2 border-black flex scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg">
+          <ReusableTable
+            classBody="bg-[#fff]"
+            classHead="bg-[#F5F8FF] text-neutral-400 border-b"
+            columns={columns}
+            MainTableSort={handleSort}
+          >
+            {listUsersData?.data?.users?.map((data, index) => {
+              return (
+                <>
+                  <tr key={index} className="border-b">
+                    <td className="text-center">
+                      <div className="flex justify-center items-center py-2">
+                        {data.full_name}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.email}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center py-2">
+                        {data.username ? data.username : "-"}
+                      </div>
+                    </td>
+                    <td className="text-center">
+                      <div>
+                        <Button
+                          type="button"
+                          className="px-3 bg-red-500 rounded-sm py-1 text-white hover:bg-red-600"
+                          onClick={() => {
+                            setModalDeleteOpen(true);
+                            setId(String(data.id));
+                          }}
+                        >
+                          Hapus
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                </>
+              );
+            })}
+          </ReusableTable>
+        </div>
+        {Number(page) <= Number(listUsersData?.data?.max_page) && (
+          <Pagination
+            onPageChange={handlePageChange}
+            totalPages={Number(listUsersData?.data?.max_page)}
+            currentPage={Number(page)}
+          />
+        )}
       </section>
+      <Modal
+        lookup={modalDeleteOpen}
+        withClose={true}
+        onClose={() => setModalDeleteOpen(false)}
+      >
+        <DeleteDataModalUser id={id} />
+      </Modal>
     </main>
   );
 };

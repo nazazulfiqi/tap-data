@@ -53,7 +53,7 @@ export const LoginModule: FC = () => {
         password: data.password,
         redirect: false,
       });
-      // console.log(response);
+      console.log(response);
 
       if (response?.url === null) {
         setLoading(false);

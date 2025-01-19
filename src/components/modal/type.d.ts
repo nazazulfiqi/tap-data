@@ -10,6 +10,7 @@ export type TModalProps = {
   widthModal?: string;
   onClose?: MouseEventHandler<HTMLDivElement | HTMLSpanElement>;
   withClose?: boolean;
+  
 };
 
 export type TPopupModalProps = {
