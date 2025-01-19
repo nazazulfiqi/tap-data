@@ -100,7 +100,7 @@ export const LoginModule: FC = () => {
                 variant="lg"
                 control={control}
                 name={"email"}
-                placeholder="Masukkan Username"
+                placeholder="Enter Username"
                 label="Username"
                 status={errors.email ? "error" : "none"}
                 message={errors.email?.message}
@@ -111,8 +111,8 @@ export const LoginModule: FC = () => {
                 variant="lg"
                 control={control}
                 name={"password"}
-                placeholder="Masukkan Kata Sandi"
-                label="Kata Sandi"
+                placeholder="Enter Password"
+                label="Password"
                 status={errors.password ? "error" : "none"}
                 message={errors.password?.message}
                 required

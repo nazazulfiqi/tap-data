@@ -11,7 +11,6 @@ export const Modal: FC<TModalProps> = ({
   hasButton,
   hasImage,
   widthModal,
-  id,
 }): ReactElement => {
   return (
     <Fragment>

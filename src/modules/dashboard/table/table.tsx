@@ -39,6 +39,7 @@ import SelectBox from "../../../components/selectbox";
 import { MdChevronRight } from "react-icons/md";
 import Dropdown from "@/src/components/dropdown";
 import IconArrowDown from "@/src/components/icons/ic-arrow-down";
+import Link from "next/link";
 
 export function useDebounce(
   effect: VoidFunction,
@@ -497,6 +498,13 @@ export const TableSection: FC = () => {
             >
               CLEAR
             </Button>
+
+            <Link
+              href={`${process.env.NEXT_PUBLIC_API_URL}data-karyawan/download`}
+              className="bg-[#D9D9D9] text-black px-6 border-2 border-black font-bold"
+            >
+              DOWNLOAD
+            </Link>
           </div>
         </main>
       </section>
